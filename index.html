@@ -77,6 +77,14 @@
             margin: 50px 0;
         }
 
+        .download-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
         .download-btn {
             display: inline-flex;
             align-items: center;
@@ -94,6 +102,14 @@
         .download-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 40px rgba(245, 158, 11, 0.3);
+        }
+
+        .download-btn.windows {
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+        }
+
+        .download-btn.windows:hover {
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3);
         }
 
         .download-btn svg {
@@ -175,6 +191,40 @@
             border: 1px solid #475569;
         }
 
+        .install-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .install-tab {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 8px;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .install-tab:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .install-tab.active {
+            background: #f59e0b;
+            color: #000;
+        }
+
+        .install-content {
+            display: none;
+        }
+
+        .install-content.active {
+            display: block;
+        }
+
         footer {
             margin-top: 60px;
             color: #64748b;
@@ -211,19 +261,27 @@
         <div class="demo">
             <h3>How it works</h3>
             <div class="hotkey">
-                Hold <span class="key">⌥ Alt</span> + <span class="key">Space</span> → Speak → Release
+                Hold <span class="key">Alt</span> + <span class="key">Space</span> → Speak → Release
             </div>
         </div>
 
         <div class="download-section">
-            <a href="https://github.com/vasiels/voicebee-site/releases/latest/download/VoiceBee.dmg" class="download-btn">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                </svg>
-                Download for macOS
-            </a>
+            <div class="download-buttons">
+                <a href="https://github.com/vasiels/voicebee-site/releases/latest/download/VoiceBee.dmg" class="download-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                    </svg>
+                    macOS
+                </a>
+                <a href="https://github.com/vasiels/voicebee-site/releases/latest/download/VoiceBee_0.3.1_x64-setup.exe" class="download-btn windows">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 12V6.75l6-1.32v6.48L3 12zm17-9v8.75l-10 .15V5.21L20 3zM3 13l6 .09v6.81l-6-1.15V13zm17 .25V22l-10-1.91V13.1l10 .15z"/>
+                    </svg>
+                    Windows
+                </a>
+            </div>
             <p class="version">
-                Version <span id="version">0.3.1</span> · Apple Silicon (M1/M2/M3)
+                Version <span id="version">0.3.1</span>
                 <br>
                 <a href="https://github.com/vasiels/voicebee-site/releases">View all releases</a>
             </p>
@@ -231,26 +289,41 @@
 
         <div class="requirements" id="installation">
             <h3>Installation</h3>
-            <p style="color: #94a3b8; margin-bottom: 15px;">
-                After downloading, macOS may show "VoiceBee is damaged and can't be opened" because the app is not yet code-signed. To fix this:
-            </p>
-            <p style="color: #e2e8f0; margin-bottom: 10px;"><strong>Option 1:</strong> Run this command in Terminal:</p>
-            <code style="display: block; background: #1e293b; padding: 12px 16px; border-radius: 8px; color: #22c55e; font-family: monospace; margin-bottom: 15px;">xattr -cr /Applications/VoiceBee.app</code>
-            <p style="color: #e2e8f0; margin-bottom: 10px;"><strong>Option 2:</strong> Use System Settings:</p>
-            <ol style="color: #94a3b8; margin-left: 20px; margin-bottom: 0;">
-                <li style="padding: 3px 0;">Try to open VoiceBee (it will fail)</li>
-                <li style="padding: 3px 0;">Go to <strong style="color: #e2e8f0;">System Settings → Privacy & Security</strong></li>
-                <li style="padding: 3px 0;">Scroll down and click <strong style="color: #e2e8f0;">"Open Anyway"</strong></li>
-            </ol>
+            <div class="install-tabs">
+                <button class="install-tab active" onclick="showInstall('macos')">macOS</button>
+                <button class="install-tab" onclick="showInstall('windows')">Windows</button>
+            </div>
+            <div id="install-macos" class="install-content active">
+                <p style="color: #94a3b8; margin-bottom: 15px;">
+                    macOS may show "VoiceBee is damaged and can't be opened" because the app is not yet code-signed. To fix this:
+                </p>
+                <p style="color: #e2e8f0; margin-bottom: 10px;"><strong>Option 1:</strong> Run this command in Terminal:</p>
+                <code style="display: block; background: #1e293b; padding: 12px 16px; border-radius: 8px; color: #22c55e; font-family: monospace; margin-bottom: 15px;">xattr -cr /Applications/VoiceBee.app</code>
+                <p style="color: #e2e8f0; margin-bottom: 10px;"><strong>Option 2:</strong> Use System Settings:</p>
+                <ol style="color: #94a3b8; margin-left: 20px; margin-bottom: 0;">
+                    <li style="padding: 3px 0;">Try to open VoiceBee (it will fail)</li>
+                    <li style="padding: 3px 0;">Go to <strong style="color: #e2e8f0;">System Settings → Privacy & Security</strong></li>
+                    <li style="padding: 3px 0;">Scroll down and click <strong style="color: #e2e8f0;">"Open Anyway"</strong></li>
+                </ol>
+            </div>
+            <div id="install-windows" class="install-content">
+                <p style="color: #94a3b8; margin-bottom: 15px;">
+                    Windows may show a SmartScreen warning because the app is not yet code-signed. To install:
+                </p>
+                <ol style="color: #94a3b8; margin-left: 20px; margin-bottom: 0;">
+                    <li style="padding: 3px 0;">Run the installer (.exe file)</li>
+                    <li style="padding: 3px 0;">If you see "Windows protected your PC", click <strong style="color: #e2e8f0;">"More info"</strong></li>
+                    <li style="padding: 3px 0;">Click <strong style="color: #e2e8f0;">"Run anyway"</strong></li>
+                </ol>
+            </div>
         </div>
 
         <div class="requirements">
             <h3>Requirements</h3>
             <ul>
-                <li>macOS 10.15 (Catalina) or later</li>
-                <li>Apple Silicon (M1, M2, M3) Mac</li>
+                <li>macOS 10.15+ (Apple Silicon) or Windows 10/11 (64-bit)</li>
                 <li>Microphone permission</li>
-                <li>Accessibility permission (for typing at cursor)</li>
+                <li>Accessibility permission (macOS only, for typing at cursor)</li>
             </ul>
         </div>
 
@@ -258,5 +331,15 @@
             <p>Made with ☕ by <a href="https://github.com/vasiels">vasiels</a></p>
         </footer>
     </div>
+
+    <script>
+        function showInstall(platform) {
+            document.querySelectorAll('.install-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.install-content').forEach(content => content.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById('install-' + platform).classList.add('active');
+        }
+    </script>
 </body>
 </html>
