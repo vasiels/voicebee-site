@@ -3,218 +3,742 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VoiceBee - Voice to Text, Instantly</title>
+    <title>VoiceBee — Voice to Text, Instantly</title>
+    <meta name="description" content="Push-to-talk transcription that types at your cursor. Hold a hotkey, speak, release. Works in any app on macOS and Windows.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        /* ================================================
+           VOICEBEE SITE — PREMIUM DESIGN
+           ================================================ */
+
+        :root {
+            --bg-deep: #0a0a1a;
+            --bg-primary: #0f1729;
+            --bg-card: #141c32;
+            --bg-elevated: #1a1a2e;
+            --bg-glass: rgba(255, 255, 255, 0.03);
+            --bg-glass-hover: rgba(255, 255, 255, 0.055);
+
+            --accent: #4ade80;
+            --accent-hover: #6bee9a;
+            --accent-muted: rgba(74, 222, 128, 0.1);
+
+            --text-primary: #eaeaea;
+            --text-secondary: #8a8fa0;
+            --text-tertiary: #4a4f60;
+
+            --border: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(255, 255, 255, 0.1);
+
+            --blue: #5b9cf5;
+            --blue-bg: rgba(91, 156, 245, 0.08);
+            --green: #4ade80;
+            --green-bg: rgba(74, 222, 128, 0.08);
+
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #fff;
+            font-family: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 800px;
+        /* Noise texture */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0.02;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 200px 200px;
+        }
+
+        ::selection {
+            background: rgba(74, 222, 128, 0.25);
+            color: var(--text-primary);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: "Outfit", sans-serif;
+            letter-spacing: -0.03em;
+        }
+
+        /* ================================================
+           NAV
+           ================================================ */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 0 24px;
+            transition: all 0.3s var(--ease-out);
+        }
+
+        nav.scrolled {
+            background: rgba(8, 8, 10, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 60px 20px;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
         }
 
-        .logo {
-            font-size: 64px;
-            margin-bottom: 20px;
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
         }
 
-        h1 {
-            font-size: 48px;
+        .nav-logo-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .nav-logo-text {
+            font-family: "Outfit", sans-serif;
+            font-size: 1.15rem;
             font-weight: 700;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .tagline {
-            font-size: 24px;
-            color: #94a3b8;
-            margin-bottom: 40px;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin: 50px 0;
-            text-align: left;
-        }
-
-        .feature {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .feature h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #fbbf24;
-        }
-
-        .feature p {
-            color: #94a3b8;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .download-section {
-            margin: 50px 0;
-        }
-
-        .download-buttons {
+        .nav-links {
             display: flex;
-            gap: 16px;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-cta {
+            font-size: 0.85rem !important;
+            font-weight: 600 !important;
+            color: var(--bg-deep) !important;
+            background: linear-gradient(135deg, var(--accent), #22c55e);
+            padding: 8px 20px;
+            border-radius: 8px;
+            transition: all 0.2s var(--ease-out) !important;
+            box-shadow: 0 2px 8px rgba(74, 222, 128, 0.2);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(74, 222, 128, 0.3) !important;
+        }
+
+        /* ================================================
+           HERO
+           ================================================ */
+
+        .hero {
+            position: relative;
+            padding: 160px 24px 100px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Gradient mesh background */
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(74, 222, 128, 0.07) 0%, transparent 65%);
+            top: 10%;
+            left: 50%;
+            transform: translate(-50%, -30%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(91, 156, 245, 0.04) 0%, transparent 65%);
+            top: 60%;
+            right: -10%;
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: var(--accent-muted);
+            border: 1px solid rgba(74, 222, 128, 0.12);
+            border-radius: 100px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 28px;
+            letter-spacing: 0.02em;
+            animation: fadeUp 0.6s var(--ease-out) both;
+        }
+
+        .hero-badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 6vw, 4rem);
+            font-weight: 800;
+            line-height: 1.05;
+            margin-bottom: 20px;
+            letter-spacing: -0.04em;
+            animation: fadeUp 0.6s 0.1s var(--ease-out) both;
+        }
+
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, var(--text-primary) 20%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+            color: var(--text-secondary);
+            max-width: 520px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+            animation: fadeUp 0.6s 0.2s var(--ease-out) both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
             justify-content: center;
             flex-wrap: wrap;
-            margin-bottom: 15px;
+            animation: fadeUp 0.6s 0.3s var(--ease-out) both;
         }
 
-        .download-btn {
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ================================================
+           DOWNLOAD BUTTONS
+           ================================================ */
+
+        .dl-btn {
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            background: linear-gradient(90deg, #f59e0b, #d97706);
-            color: #000;
-            font-size: 18px;
+            gap: 10px;
+            font-family: "DM Sans", sans-serif;
+            font-size: 0.95rem;
             font-weight: 600;
-            padding: 16px 32px;
+            padding: 14px 28px;
             border-radius: 12px;
             text-decoration: none;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.25s var(--ease-out);
+            border: 1px solid transparent;
         }
 
-        .download-btn:hover {
+        .dl-btn svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .dl-btn-mac {
+            background: linear-gradient(135deg, var(--accent), #22c55e);
+            color: var(--bg-deep);
+            box-shadow: 0 4px 20px rgba(74, 222, 128, 0.25);
+        }
+
+        .dl-btn-mac:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 40px rgba(245, 158, 11, 0.3);
+            box-shadow: 0 8px 32px rgba(74, 222, 128, 0.35);
         }
 
-        .download-btn.windows {
-            background: linear-gradient(90deg, #3b82f6, #2563eb);
+        .dl-btn-win {
+            background: var(--bg-glass);
+            color: var(--text-primary);
+            border-color: var(--border-hover);
         }
 
-        .download-btn.windows:hover {
-            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3);
+        .dl-btn-win:hover {
+            background: var(--bg-glass-hover);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
         }
 
-        .download-btn svg {
-            width: 24px;
-            height: 24px;
+        .hero-version {
+            margin-top: 20px;
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            animation: fadeUp 0.6s 0.4s var(--ease-out) both;
         }
 
-        .version {
-            margin-top: 15px;
-            color: #64748b;
-            font-size: 14px;
-        }
-
-        .version a {
-            color: #94a3b8;
+        .hero-version a {
+            color: var(--text-secondary);
             text-decoration: none;
+            transition: color 0.15s;
         }
 
-        .version a:hover {
-            text-decoration: underline;
+        .hero-version a:hover {
+            color: var(--accent);
         }
 
-        .requirements {
-            margin-top: 50px;
-            padding: 25px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            text-align: left;
-        }
-
-        .requirements h3 {
-            margin-bottom: 15px;
-            color: #e2e8f0;
-        }
-
-        .requirements ul {
-            list-style: none;
-            color: #94a3b8;
-        }
-
-        .requirements li {
-            padding: 5px 0;
-            padding-left: 25px;
-            position: relative;
-        }
-
-        .requirements li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #22c55e;
-        }
+        /* ================================================
+           DEMO SECTION
+           ================================================ */
 
         .demo {
-            margin: 50px 0;
-            padding: 30px;
-            background: rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+            max-width: 580px;
+            margin: -20px auto 0;
+            padding: 32px 40px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            animation: fadeUp 0.6s 0.5s var(--ease-out) both;
         }
 
-        .demo h3 {
-            margin-bottom: 20px;
-            color: #e2e8f0;
+        .demo-label {
+            font-family: "DM Sans", sans-serif;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-tertiary);
+            font-weight: 600;
+            margin-bottom: 16px;
         }
 
-        .hotkey {
-            display: inline-flex;
-            gap: 8px;
+        .demo-flow {
+            display: flex;
             align-items: center;
-            font-size: 20px;
+            justify-content: center;
+            gap: 12px;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            flex-wrap: wrap;
         }
 
         .key {
-            background: #334155;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 0.88rem;
+            font-weight: 500;
             padding: 8px 16px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-hover);
             border-radius: 8px;
-            font-family: monospace;
-            border: 1px solid #475569;
+            color: var(--text-primary);
+            letter-spacing: 0.02em;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.04);
+        }
+
+        .demo-arrow {
+            color: var(--text-tertiary);
+            font-size: 1.1rem;
+        }
+
+        .demo-step {
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        /* ================================================
+           SECTION SHARED
+           ================================================ */
+
+        section {
+            padding: 100px 24px;
+        }
+
+        .section-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-family: "DM Sans", sans-serif;
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.4rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .section-desc {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 520px;
+            line-height: 1.6;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-header .section-desc {
+            margin: 0 auto;
+        }
+
+        /* ================================================
+           FEATURES
+           ================================================ */
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px 28px;
+            transition: all 0.3s var(--ease-out);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.3s var(--ease-out);
+            background: radial-gradient(ellipse at top, rgba(74, 222, 128, 0.04) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .feature-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            background: var(--accent-muted);
+            border: 1px solid rgba(74, 222, 128, 0.08);
+        }
+
+        .feature-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .feature-card p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ================================================
+           PRICING
+           ================================================ */
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            align-items: start;
+        }
+
+        .pricing-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 36px 32px;
+            transition: all 0.3s var(--ease-out);
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            border-color: var(--border-hover);
+        }
+
+        .pricing-card.featured {
+            border-color: rgba(74, 222, 128, 0.2);
+            background: var(--bg-elevated);
+        }
+
+        .pricing-card.featured::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            pointer-events: none;
+            background: radial-gradient(ellipse at top, rgba(74, 222, 128, 0.06) 0%, transparent 60%);
+        }
+
+        .pricing-popular {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "DM Sans", sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 4px 14px;
+            background: linear-gradient(135deg, var(--accent), #22c55e);
+            color: var(--bg-deep);
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+
+        .pricing-name {
+            font-family: "Outfit", sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .pricing-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .pricing-price {
+            font-family: "Outfit", sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            margin-bottom: 4px;
+        }
+
+        .pricing-price span {
+            font-family: "DM Sans", sans-serif;
+            font-size: 0.88rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            letter-spacing: 0;
+        }
+
+        .pricing-period {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            margin-bottom: 28px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .pricing-features li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pricing-features li::before {
+            content: '';
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--green-bg);
+            flex-shrink: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%235de4a5' stroke-width='3'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 10px;
+        }
+
+        .pricing-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            font-family: "DM Sans", sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.2s var(--ease-out);
+            cursor: pointer;
+            border: none;
+        }
+
+        .pricing-btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-hover);
+            color: var(--text-secondary);
+        }
+
+        .pricing-btn-outline:hover {
+            background: var(--bg-glass-hover);
+            color: var(--text-primary);
+        }
+
+        .pricing-btn-primary {
+            background: linear-gradient(135deg, var(--accent), #22c55e);
+            color: var(--bg-deep);
+            box-shadow: 0 2px 12px rgba(74, 222, 128, 0.2);
+        }
+
+        .pricing-btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(74, 222, 128, 0.3);
+        }
+
+        .pricing-btn-ghost {
+            background: var(--bg-glass);
+            color: var(--text-secondary);
+        }
+
+        .pricing-btn-ghost:hover {
+            background: var(--bg-glass-hover);
+            color: var(--text-primary);
+        }
+
+        /* ================================================
+           INSTALLATION
+           ================================================ */
+
+        .install-section {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .install-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
         }
 
         .install-tabs {
             display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: 6px;
+            margin-bottom: 24px;
+            background: var(--bg-deep);
+            border-radius: 10px;
+            padding: 4px;
         }
 
         .install-tab {
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.1);
+            flex: 1;
+            padding: 9px 16px;
+            background: transparent;
             border: none;
             border-radius: 8px;
-            color: #94a3b8;
+            color: var(--text-tertiary);
+            font-family: "DM Sans", sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 14px;
-            transition: all 0.2s;
+            transition: all 0.2s var(--ease-out);
         }
 
         .install-tab:hover {
-            background: rgba(255, 255, 255, 0.15);
+            color: var(--text-secondary);
         }
 
         .install-tab.active {
-            background: #f59e0b;
-            color: #000;
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
 
         .install-content {
@@ -223,123 +747,698 @@
 
         .install-content.active {
             display: block;
+            animation: fadeIn 0.2s var(--ease-out);
         }
 
-        footer {
-            margin-top: 60px;
-            color: #64748b;
-            font-size: 14px;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        footer a {
-            color: #94a3b8;
+        .install-text {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .install-label {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .install-code {
+            display: block;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 0.82rem;
+            background: var(--bg-deep);
+            border: 1px solid var(--border);
+            padding: 14px 18px;
+            border-radius: 10px;
+            color: var(--green);
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        .install-steps {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+
+        .install-steps strong {
+            color: var(--text-primary);
+        }
+
+        /* ================================================
+           REQUIREMENTS
+           ================================================ */
+
+        .req-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .req-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .req-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .req-list li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .req-check {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            background: var(--green-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--green);
+            font-size: 0.72rem;
+        }
+
+        /* ================================================
+           FOOTER
+           ================================================ */
+
+        .site-footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-left {
+            font-size: 0.82rem;
+            color: var(--text-tertiary);
+        }
+
+        .footer-left a {
+            color: var(--text-secondary);
             text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .footer-left a:hover {
+            color: var(--accent);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 0.82rem;
+            color: var(--text-tertiary);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-secondary);
+        }
+
+        /* ================================================
+           COMPARISON TABLE
+           ================================================ */
+
+        .compare-table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .compare-table {
+            width: 100%;
+            min-width: 820px;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .compare-table thead th {
+            font-family: "Outfit", sans-serif;
+            font-weight: 600;
+            font-size: 0.82rem;
+            letter-spacing: -0.01em;
+            padding: 16px 14px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-elevated);
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .compare-table thead th:first-child {
+            text-align: left;
+            border-radius: 16px 0 0 0;
+        }
+
+        .compare-table thead th:last-child {
+            border-radius: 0 16px 0 0;
+        }
+
+        .compare-table thead th.col-highlight {
+            color: var(--accent);
+            background: rgba(74, 222, 128, 0.06);
+            position: relative;
+        }
+
+        .compare-table thead th.col-highlight::after {
+            content: "You're here";
+            display: block;
+            font-family: "DM Sans", sans-serif;
+            font-size: 0.6rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--accent);
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+
+        .compare-table tbody td {
+            padding: 13px 14px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            vertical-align: middle;
+        }
+
+        .compare-table tbody td:first-child {
+            text-align: left;
+            font-weight: 500;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        .compare-table tbody td.col-highlight {
+            background: rgba(74, 222, 128, 0.03);
+        }
+
+        .compare-table tbody tr:last-child td:first-child {
+            border-radius: 0 0 0 16px;
+        }
+
+        .compare-table tbody tr:last-child td:last-child {
+            border-radius: 0 0 16px 0;
+        }
+
+        .compare-table tbody tr:hover td {
+            background: var(--bg-glass-hover);
+        }
+
+        .compare-table tbody tr:hover td.col-highlight {
+            background: rgba(74, 222, 128, 0.06);
+        }
+
+        .tbl-check {
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        .tbl-x {
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+        }
+
+        .tbl-note {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* ================================================
+           RESPONSIVE
+           ================================================ */
+
+        @media (max-width: 768px) {
+            .nav-links a:not(.nav-cta) {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .compare-table-wrap {
+                margin: 0 -8px;
+                border-radius: 12px;
+            }
+
+            .compare-table {
+                font-size: 0.78rem;
+            }
+
+            section {
+                padding: 64px 20px;
+            }
+
+            .hero {
+                padding: 120px 20px 80px;
+            }
+        }
+
+        @media (max-width: 900px) and (min-width: 769px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .pricing-card:last-child {
+                grid-column: 1 / -1;
+                max-width: 400px;
+                margin: 0 auto;
+                width: 100%;
+            }
+        }
+
+        /* ================================================
+           SCROLL REVEAL
+           ================================================ */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">🐝</div>
-        <h1>VoiceBee</h1>
-        <p class="tagline">Voice to text, instantly at your cursor</p>
 
-        <div class="features">
-            <div class="feature">
-                <h3>⚡ Instant Transcription</h3>
-                <p>Hold a hotkey, speak, release. Text appears at your cursor instantly.</p>
-            </div>
-            <div class="feature">
-                <h3>🎯 Works Everywhere</h3>
-                <p>Type in any app - emails, documents, chat, code editors, anywhere.</p>
-            </div>
-            <div class="feature">
-                <h3>🔒 Privacy First</h3>
-                <p>Audio is processed and immediately discarded. No recordings stored.</p>
+    <!-- NAV -->
+    <nav id="nav">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">
+                <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="8" fill="url(#logo-g)"/>
+                    <path d="M16 8c-2.2 0-4 1.8-4 4v4c0 2.2 1.8 4 4 4s4-1.8 4-4v-4c0-2.2-1.8-4-4-4z" fill="#0c0c0e" opacity="0.9"/>
+                    <path d="M22 15v1c0 3.3-2.7 6-6 6s-6-2.7-6-6v-1" stroke="#0c0c0e" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+                    <line x1="16" y1="22" x2="16" y2="25" stroke="#0c0c0e" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+                    <defs><linearGradient id="logo-g" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#4ade80"/><stop offset="1" stop-color="#22c55e"/></linearGradient></defs>
+                </svg>
+                <span class="nav-logo-text">VoiceBee</span>
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#compare">Compare</a>
+                <a href="#install">Install</a>
+                <a href="#download" class="nav-cta">Download</a>
             </div>
         </div>
+    </nav>
 
-        <div class="demo">
-            <h3>How it works</h3>
-            <div class="hotkey">
-                Hold <span class="key">Alt</span> + <span class="key">Space</span> → Speak → Release
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-badge">
+                <span class="hero-badge-dot"></span>
+                Now available on macOS &amp; Windows
             </div>
-        </div>
-
-        <div class="download-section">
-            <div class="download-buttons">
-                <a href="https://github.com/vasiels/voicebee-site/releases/latest/download/VoiceBee.dmg" class="download-btn">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                    </svg>
-                    macOS
+            <h1><span class="gradient">Voice to text,</span><br>instantly at your cursor</h1>
+            <p class="hero-sub">
+                Hold a hotkey, speak, release. Your words appear wherever your cursor is — emails, docs, code, chat. Anywhere.
+            </p>
+            <div class="hero-buttons" id="download">
+                <a href="https://github.com/vasiels/voicebee-site/releases/latest/download/VoiceBee.dmg" class="dl-btn dl-btn-mac">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                    Download for macOS
                 </a>
-                <a href="https://github.com/vasiels/voicebee-site/releases/latest/download/VoiceBee_x64-setup.exe" class="download-btn windows">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M3 12V6.75l6-1.32v6.48L3 12zm17-9v8.75l-10 .15V5.21L20 3zM3 13l6 .09v6.81l-6-1.15V13zm17 .25V22l-10-1.91V13.1l10 .15z"/>
-                    </svg>
-                    Windows
+                <a href="https://github.com/vasiels/voicebee-site/releases/latest/download/VoiceBee_x64-setup.exe" class="dl-btn dl-btn-win">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 12V6.75l6-1.32v6.48L3 12zm17-9v8.75l-10 .15V5.21L20 3zM3 13l6 .09v6.81l-6-1.15V13zm17 .25V22l-10-1.91V13.1l10 .15z"/></svg>
+                    Download for Windows
                 </a>
             </div>
-            <p class="version">
-                Version <span id="version">0.3.14</span>
-                <br>
-                <a href="https://github.com/vasiels/voicebee-site/releases">View all releases</a>
+            <p class="hero-version">
+                Version <span id="version">0.7.8</span> &middot;
+                <a href="https://github.com/vasiels/voicebee-site/releases">All releases</a>
             </p>
         </div>
 
-        <div class="requirements" id="installation">
-            <h3>Installation</h3>
-            <div class="install-tabs">
-                <button class="install-tab active" onclick="showInstall('macos')">macOS</button>
-                <button class="install-tab" onclick="showInstall('windows')">Windows</button>
-            </div>
-            <div id="install-macos" class="install-content active">
-                <p style="color: #94a3b8; margin-bottom: 15px;">
-                    macOS may show "VoiceBee is damaged and can't be opened" because the app is not yet code-signed. To fix this:
-                </p>
-                <p style="color: #e2e8f0; margin-bottom: 10px;"><strong>Option 1:</strong> Run this command in Terminal:</p>
-                <code style="display: block; background: #1e293b; padding: 12px 16px; border-radius: 8px; color: #22c55e; font-family: monospace; margin-bottom: 15px;">xattr -cr /Applications/VoiceBee.app</code>
-                <p style="color: #e2e8f0; margin-bottom: 10px;"><strong>Option 2:</strong> Use System Settings:</p>
-                <ol style="color: #94a3b8; margin-left: 20px; margin-bottom: 0;">
-                    <li style="padding: 3px 0;">Try to open VoiceBee (it will fail)</li>
-                    <li style="padding: 3px 0;">Go to <strong style="color: #e2e8f0;">System Settings → Privacy & Security</strong></li>
-                    <li style="padding: 3px 0;">Scroll down and click <strong style="color: #e2e8f0;">"Open Anyway"</strong></li>
-                </ol>
-            </div>
-            <div id="install-windows" class="install-content">
-                <p style="color: #94a3b8; margin-bottom: 15px;">
-                    Windows may show a SmartScreen warning because the app is not yet code-signed. To install:
-                </p>
-                <ol style="color: #94a3b8; margin-left: 20px; margin-bottom: 0;">
-                    <li style="padding: 3px 0;">Run the installer (.exe file)</li>
-                    <li style="padding: 3px 0;">If you see "Windows protected your PC", click <strong style="color: #e2e8f0;">"More info"</strong></li>
-                    <li style="padding: 3px 0;">Click <strong style="color: #e2e8f0;">"Run anyway"</strong></li>
-                </ol>
+        <!-- Demo -->
+        <div class="demo">
+            <div class="demo-label">How it works</div>
+            <div class="demo-flow">
+                Hold <span class="key">Alt</span> <span class="key">Space</span>
+                <span class="demo-arrow">&rarr;</span>
+                <span class="demo-step">Speak</span>
+                <span class="demo-arrow">&rarr;</span>
+                <span class="demo-step">Release</span>
             </div>
         </div>
+    </section>
 
-        <div class="requirements">
-            <h3>Requirements</h3>
-            <ul>
-                <li>macOS 10.15+ (Apple Silicon) or Windows 10/11 (64-bit)</li>
-                <li>Microphone permission</li>
-                <li>Accessibility permission (macOS only, for typing at cursor)</li>
-            </ul>
+    <!-- FEATURES -->
+    <section id="features">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-label">Features</div>
+                <h2 class="section-title">Built for speed and simplicity</h2>
+                <p class="section-desc">No menus, no clicks, no window switching. Just hold, speak, and your words appear.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card reveal">
+                    <div class="feature-icon">&#9889;</div>
+                    <h3>Instant Transcription</h3>
+                    <p>Hold a hotkey, speak, release. Text appears at your cursor in under a second.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon">&#127919;</div>
+                    <h3>Works Everywhere</h3>
+                    <p>Emails, documents, Slack, code editors, browsers — VoiceBee types wherever your cursor is.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon">&#128274;</div>
+                    <h3>Privacy First</h3>
+                    <p>Audio stays on your device. Recordings are never uploaded. Only text is synced if you choose.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon">&#127760;</div>
+                    <h3>Local + Cloud STT</h3>
+                    <p>Use Whisper locally for full privacy, or OpenAI cloud for maximum accuracy. Your choice.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon">&#128488;</div>
+                    <h3>10+ Languages</h3>
+                    <p>English, Greek, Spanish, French, German, Japanese, Chinese, and more — with auto-detection.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon">&#128337;</div>
+                    <h3>History &amp; Export</h3>
+                    <p>Every transcription saved with timestamp. Search, copy, retry, or export your full history.</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <footer>
-            <p>Made with ☕ by <a href="https://github.com/vasiels">vasiels</a></p>
-        </footer>
-    </div>
+    <!-- PRICING -->
+    <section id="pricing" style="background: var(--bg-primary);">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-label">Pricing</div>
+                <h2 class="section-title">Start free, upgrade when ready</h2>
+                <p class="section-desc">No credit card required. Get 2,500 words per week free, forever.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card reveal">
+                    <div class="pricing-name">Free</div>
+                    <div class="pricing-desc">For trying out voice transcription</div>
+                    <div class="pricing-price">$0 <span>/mo</span></div>
+                    <div class="pricing-period">Free forever</div>
+                    <ul class="pricing-features">
+                        <li>2,500 words per week</li>
+                        <li>Local Whisper STT</li>
+                        <li>Cloud STT (within limit)</li>
+                        <li>Full history &amp; export</li>
+                        <li>10+ languages</li>
+                    </ul>
+                    <a href="#download" class="pricing-btn pricing-btn-outline">Download Free</a>
+                </div>
+                <div class="pricing-card featured reveal">
+                    <div class="pricing-popular">Most Popular</div>
+                    <div class="pricing-name">Pro</div>
+                    <div class="pricing-desc">For daily voice-to-text power users</div>
+                    <div class="pricing-price">$10 <span>/mo</span></div>
+                    <div class="pricing-period">or $96/yr (save 20%)</div>
+                    <ul class="pricing-features">
+                        <li>Unlimited transcription</li>
+                        <li>Priority cloud processing</li>
+                        <li>Local Whisper STT</li>
+                        <li>Full history &amp; export</li>
+                        <li>Early access to new features</li>
+                    </ul>
+                    <a href="#download" class="pricing-btn pricing-btn-primary">Get Pro</a>
+                </div>
+                <div class="pricing-card reveal">
+                    <div class="pricing-name">Teams</div>
+                    <div class="pricing-desc">For organizations and teams</div>
+                    <div class="pricing-price">&mdash;</div>
+                    <div class="pricing-period">Coming soon</div>
+                    <ul class="pricing-features">
+                        <li>Everything in Pro</li>
+                        <li>Team management</li>
+                        <li>Shared billing</li>
+                        <li>Admin controls</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <button class="pricing-btn pricing-btn-ghost" disabled style="opacity:0.5;cursor:default;">Coming Soon</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPARISON -->
+    <section id="compare">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-label">Comparison</div>
+                <h2 class="section-title">How VoiceBee stacks up</h2>
+                <p class="section-desc">Side-by-side with every major voice-to-text app on the market.</p>
+            </div>
+            <div class="compare-table-wrap reveal">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="col-highlight">VoiceBee</th>
+                            <th>Wispr Flow</th>
+                            <th>SuperWhisper</th>
+                            <th>Typeless</th>
+                            <th>VoiceInk</th>
+                            <th>OpenWhispr</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Free tier</td>
+                            <td class="col-highlight">2,500 w/wk</td>
+                            <td>2,000 w/wk</td>
+                            <td>15 min total</td>
+                            <td>4,000 w/wk</td>
+                            <td><span class="tbl-x">&mdash;</span></td>
+                            <td>2,000 w/wk</td>
+                        </tr>
+                        <tr>
+                            <td>Pro price</td>
+                            <td class="col-highlight"><strong>$10/mo</strong></td>
+                            <td>$12–15/mo</td>
+                            <td>$8.49/mo</td>
+                            <td>$12–30/mo</td>
+                            <td>$40 once</td>
+                            <td>$9/mo</td>
+                        </tr>
+                        <tr>
+                            <td>macOS</td>
+                            <td class="col-highlight"><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                        </tr>
+                        <tr>
+                            <td>Windows</td>
+                            <td class="col-highlight"><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-x">&#10007;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-x">&#10007;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                        </tr>
+                        <tr>
+                            <td>Local / Offline</td>
+                            <td class="col-highlight"><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-x">&#10007;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-x">&#10007;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                        </tr>
+                        <tr>
+                            <td>Cloud transcription</td>
+                            <td class="col-highlight"><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span><span class="tbl-note">cloud only</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span><span class="tbl-note">cloud only</span></td>
+                            <td><span class="tbl-x">&#10007;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                        </tr>
+                        <tr>
+                            <td>Open source</td>
+                            <td class="col-highlight"><span class="tbl-x">&#10007;</span></td>
+                            <td><span class="tbl-x">&#10007;</span></td>
+                            <td><span class="tbl-x">&#10007;</span></td>
+                            <td><span class="tbl-x">&#10007;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                        </tr>
+                        <tr>
+                            <td>Push-to-talk</td>
+                            <td class="col-highlight"><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                        </tr>
+                        <tr>
+                            <td>Types at cursor</td>
+                            <td class="col-highlight"><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- INSTALLATION -->
+    <section id="install">
+        <div class="section-inner install-section">
+            <div class="section-header reveal">
+                <div class="section-label">Installation</div>
+                <h2 class="section-title">Up and running in seconds</h2>
+                <p class="section-desc">VoiceBee is not yet code-signed. Here's how to open it on first launch.</p>
+            </div>
+            <div class="install-card reveal">
+                <div class="install-tabs">
+                    <button class="install-tab active" onclick="showInstall('macos')">macOS</button>
+                    <button class="install-tab" onclick="showInstall('windows')">Windows</button>
+                </div>
+                <div id="install-macos" class="install-content active">
+                    <p class="install-text">
+                        macOS may show "VoiceBee is damaged and can't be opened" because the app is not yet code-signed.
+                    </p>
+                    <p class="install-label">Option 1 &mdash; Terminal command:</p>
+                    <code class="install-code">xattr -cr /Applications/VoiceBee.app</code>
+                    <p class="install-label">Option 2 &mdash; System Settings:</p>
+                    <ol class="install-steps">
+                        <li>Try to open VoiceBee (it will fail)</li>
+                        <li>Go to <strong>System Settings &rarr; Privacy &amp; Security</strong></li>
+                        <li>Scroll down and click <strong>"Open Anyway"</strong></li>
+                    </ol>
+                </div>
+                <div id="install-windows" class="install-content">
+                    <p class="install-text">
+                        Windows may show a SmartScreen warning because the app is not yet code-signed.
+                    </p>
+                    <ol class="install-steps">
+                        <li>Run the installer (.exe file)</li>
+                        <li>If you see "Windows protected your PC", click <strong>"More info"</strong></li>
+                        <li>Click <strong>"Run anyway"</strong></li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Requirements -->
+            <div class="req-card reveal" style="margin-top: 24px;">
+                <h3>System Requirements</h3>
+                <ul class="req-list">
+                    <li><span class="req-check">&#10003;</span> macOS 10.15+ (Apple Silicon &amp; Intel) or Windows 10/11 (64-bit)</li>
+                    <li><span class="req-check">&#10003;</span> Microphone permission</li>
+                    <li><span class="req-check">&#10003;</span> Accessibility permission (macOS only, for typing at cursor)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-left">
+                Made by <a href="https://github.com/vasiels">vasiels</a>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/vasiels/voicebee-site/releases">Releases</a>
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#compare">Compare</a>
+            </div>
+        </div>
+    </footer>
 
     <script>
+        // Tab switching
         function showInstall(platform) {
-            document.querySelectorAll('.install-tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.install-content').forEach(content => content.classList.remove('active'));
-
+            document.querySelectorAll('.install-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.install-content').forEach(c => c.classList.remove('active'));
             event.target.classList.add('active');
             document.getElementById('install-' + platform).classList.add('active');
         }
+
+        // Nav scroll effect
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 40);
+        }, { passive: true });
+
+        // Scroll reveal
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('visible'), i * 80);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+        reveals.forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
