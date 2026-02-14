@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VoiceBee — Voice to Text, Instantly</title>
-    <meta name="description" content="Push-to-talk transcription that types at your cursor. Hold a hotkey, speak, release. Works in any app on macOS and Windows.">
+    <title>VoiceBee — Type 3x Faster With Your Voice</title>
+    <meta name="description" content="The fastest way from brain to screen. Hold a key, speak, and your words appear instantly in any app. Local AI, cloud AI, or both. Mac & Windows. Plans from $10/mo.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <meta name="theme-color" content="#0a0a1a">
-    <meta property="og:title" content="VoiceBee — Voice to Text, Instantly">
-    <meta property="og:description" content="Push-to-talk transcription that types at your cursor. Hold a hotkey, speak, release. Works in any app on macOS and Windows.">
+    <meta property="og:title" content="VoiceBee — Type 3x Faster With Your Voice">
+    <meta property="og:description" content="Hold a key, speak, and your words appear instantly in any app. Local AI, cloud AI, or both. Mac & Windows. Plans from $10/mo.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://voicebee.bytebee.gr">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="VoiceBee — Voice to Text, Instantly">
-    <meta name="twitter:description" content="Push-to-talk transcription that types at your cursor. Hold a hotkey, speak, release. Works in any app on macOS and Windows.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="VoiceBee — Type 3x Faster With Your Voice">
+    <meta name="twitter:description" content="Hold a key, speak, and your words appear instantly in any app. Local AI, cloud AI, or both. Mac & Windows. Plans from $10/mo.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         /* ================================================
-           VOICEBEE SITE — PREMIUM DESIGN
+           VOICEBEE — WORLD-CLASS PREMIUM DESIGN
            ================================================ */
 
         :root {
@@ -33,6 +33,11 @@
             --accent: #4ade80;
             --accent-hover: #6bee9a;
             --accent-muted: rgba(74, 222, 128, 0.1);
+            --accent-glow: rgba(74, 222, 128, 0.15);
+
+            --gold: #f5a623;
+            --gold-bg: rgba(245, 166, 35, 0.08);
+            --gold-border: rgba(245, 166, 35, 0.15);
 
             --text-primary: #eaeaea;
             --text-secondary: #8a8fa0;
@@ -45,20 +50,15 @@
             --blue-bg: rgba(91, 156, 245, 0.08);
             --green: #4ade80;
             --green-bg: rgba(74, 222, 128, 0.08);
+            --purple: #a78bfa;
+            --purple-bg: rgba(167, 139, 250, 0.08);
 
             --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
             --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
@@ -71,7 +71,6 @@
             overflow-x: hidden;
         }
 
-        /* Noise texture */
         body::before {
             content: '';
             position: fixed;
@@ -103,20 +102,20 @@
             top: 0;
             left: 0;
             right: 0;
-            z-index: 100;
+            z-index: 1000;
             padding: 0 24px;
             transition: all 0.3s var(--ease-out);
         }
 
         nav.scrolled {
-            background: rgba(8, 8, 10, 0.85);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(8, 8, 10, 0.88);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
             border-bottom: 1px solid var(--border);
         }
 
         .nav-inner {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             align-items: center;
@@ -132,10 +131,7 @@
             color: var(--text-primary);
         }
 
-        .nav-logo-icon {
-            width: 32px;
-            height: 32px;
-        }
+        .nav-logo-icon { width: 32px; height: 32px; }
 
         .nav-logo-text {
             font-family: "Outfit", sans-serif;
@@ -162,9 +158,7 @@
             transition: color 0.2s;
         }
 
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
+        .nav-links a:hover { color: var(--text-primary); }
 
         .nav-cta {
             font-size: 0.85rem !important;
@@ -182,47 +176,148 @@
             box-shadow: 0 4px 16px rgba(74, 222, 128, 0.3) !important;
         }
 
+        /* Mobile menu */
+        .nav-hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .nav-hamburger span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--text-primary);
+            margin: 0 auto;
+            transition: all 0.3s var(--ease-out);
+            border-radius: 2px;
+        }
+
+        .nav-hamburger span:nth-child(2) { margin-top: 5px; }
+        .nav-hamburger span:nth-child(3) { margin-top: 5px; }
+
+        .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 5px); }
+        .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+        .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -5px); }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(8, 8, 10, 0.96);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 28px;
+        }
+
+        .mobile-menu.open { display: flex; }
+
+        .mobile-menu a {
+            font-family: "Outfit", sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .mobile-menu a:hover { color: var(--text-primary); }
+
+        .mobile-menu .nav-cta {
+            font-size: 1rem !important;
+            padding: 12px 32px;
+            border-radius: 10px;
+        }
+
         /* ================================================
            HERO
            ================================================ */
 
         .hero {
             position: relative;
-            padding: 160px 24px 100px;
+            padding: 180px 24px 100px;
             text-align: center;
             overflow: hidden;
         }
 
-        /* Gradient mesh background */
         .hero::before {
             content: '';
             position: absolute;
-            width: 800px;
-            height: 800px;
+            width: 1200px;
+            height: 1200px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(74, 222, 128, 0.07) 0%, transparent 65%);
-            top: 10%;
+            background: radial-gradient(circle, rgba(74, 222, 128, 0.1) 0%, rgba(91, 156, 245, 0.04) 40%, transparent 70%);
+            top: -10%;
             left: 50%;
             transform: translate(-50%, -30%);
             pointer-events: none;
+            animation: heroGlow 8s ease-in-out infinite alternate;
         }
 
         .hero::after {
             content: '';
             position: absolute;
-            width: 500px;
-            height: 500px;
+            width: 800px;
+            height: 800px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(91, 156, 245, 0.04) 0%, transparent 65%);
-            top: 60%;
-            right: -10%;
+            background: radial-gradient(circle, rgba(167, 139, 250, 0.06) 0%, transparent 65%);
+            top: 40%;
+            right: -15%;
             pointer-events: none;
+            animation: heroGlow2 12s 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            from { opacity: 0.5; transform: scale(1) translate(-50%, -30%); }
+            to { opacity: 1; transform: scale(1.15) translate(-50%, -30%); }
+        }
+
+        @keyframes heroGlow2 {
+            from { opacity: 0.3; transform: scale(1); }
+            to { opacity: 0.7; transform: scale(1.2); }
+        }
+
+        /* Animated waveform behind hero */
+        .hero-waveform {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 3px;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero-waveform .bar {
+            width: 3px;
+            border-radius: 2px;
+            background: var(--accent);
+            animation: waveBar 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes waveBar {
+            from { height: 20%; }
+            to { height: 90%; }
         }
 
         .hero-inner {
             position: relative;
             z-index: 1;
-            max-width: 720px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
@@ -237,7 +332,7 @@
             font-size: 0.78rem;
             font-weight: 600;
             color: var(--accent);
-            margin-bottom: 28px;
+            margin-bottom: 32px;
             letter-spacing: 0.02em;
             animation: fadeUp 0.6s var(--ease-out) both;
         }
@@ -256,27 +351,34 @@
         }
 
         .hero h1 {
-            font-size: clamp(2.8rem, 6vw, 4rem);
+            font-size: clamp(3.2rem, 8vw, 5.5rem);
             font-weight: 800;
-            line-height: 1.05;
-            margin-bottom: 20px;
-            letter-spacing: -0.04em;
-            animation: fadeUp 0.6s 0.1s var(--ease-out) both;
+            line-height: 1.02;
+            margin-bottom: 28px;
+            letter-spacing: -0.045em;
+            animation: fadeUp 0.8s 0.1s var(--ease-out) both;
         }
 
         .hero h1 .gradient {
-            background: linear-gradient(135deg, var(--text-primary) 20%, var(--accent) 100%);
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 50%, #22c55e 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            background-size: 200% auto;
+            animation: fadeUp 0.8s 0.1s var(--ease-out) both, shimmer 6s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
         }
 
         .hero-sub {
-            font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+            font-size: clamp(1.08rem, 2.2vw, 1.25rem);
             color: var(--text-secondary);
-            max-width: 520px;
-            margin: 0 auto 40px;
-            line-height: 1.6;
+            max-width: 560px;
+            margin: 0 auto 44px;
+            line-height: 1.65;
             animation: fadeUp 0.6s 0.2s var(--ease-out) both;
         }
 
@@ -289,15 +391,24 @@
         }
 
         @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
         }
+
+        .hero-meta {
+            margin-top: 20px;
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            animation: fadeUp 0.6s 0.4s var(--ease-out) both;
+        }
+
+        .hero-meta a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .hero-meta a:hover { color: var(--accent); }
 
         /* ================================================
            DOWNLOAD BUTTONS
@@ -317,21 +428,32 @@
             border: 1px solid transparent;
         }
 
-        .dl-btn svg {
-            width: 20px;
-            height: 20px;
-            flex-shrink: 0;
-        }
+        .dl-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
 
         .dl-btn-mac {
             background: linear-gradient(135deg, var(--accent), #22c55e);
             color: var(--bg-deep);
-            box-shadow: 0 4px 20px rgba(74, 222, 128, 0.25);
+            box-shadow: 0 4px 24px rgba(74, 222, 128, 0.25), 0 0 0 1px rgba(74, 222, 128, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dl-btn-mac::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .dl-btn-mac:hover::after {
+            transform: translateX(100%);
         }
 
         .dl-btn-mac:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(74, 222, 128, 0.35);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 48px rgba(74, 222, 128, 0.4), 0 0 0 1px rgba(74, 222, 128, 0.2);
         }
 
         .dl-btn-win {
@@ -346,93 +468,241 @@
             transform: translateY(-2px);
         }
 
-        .hero-version {
-            margin-top: 20px;
-            font-size: 0.78rem;
-            color: var(--text-tertiary);
-            animation: fadeUp 0.6s 0.4s var(--ease-out) both;
+        /* ================================================
+           TRUST BAR
+           ================================================ */
+
+        .trust-bar {
+            padding: 48px 24px;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            animation: fadeUp 0.6s 0.6s var(--ease-out) both;
         }
 
-        .hero-version a {
+        .trust-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.82rem;
             color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.15s;
+            font-weight: 500;
+            white-space: nowrap;
         }
 
-        .hero-version a:hover {
+        .trust-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .trust-icon.green { background: var(--green-bg); }
+        .trust-icon.blue { background: var(--blue-bg); }
+        .trust-icon.purple { background: var(--purple-bg); }
+
+        /* ================================================
+           HOW IT WORKS
+           ================================================ */
+
+        .how-section {
+            padding: 100px 24px;
+            background: var(--bg-primary);
+        }
+
+        .how-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .how-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 56px;
+        }
+
+        .how-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .how-step-num {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: var(--accent-muted);
+            border: 1px solid rgba(74, 222, 128, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-family: "Outfit", sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
             color: var(--accent);
         }
 
+        .how-step h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .how-step p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .how-step .key {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 0.82rem;
+            font-weight: 500;
+            padding: 5px 12px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-hover);
+            border-radius: 6px;
+            color: var(--text-primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.04);
+            display: inline-block;
+            margin: 4px 2px;
+        }
+
+        .how-connector {
+            display: none;
+        }
+
         /* ================================================
-           DEMO SECTION
+           LIVE DEMO (Animated typing)
            ================================================ */
 
-        .demo {
-            position: relative;
-            z-index: 1;
-            max-width: 580px;
-            margin: -20px auto 0;
-            padding: 32px 40px;
+        .demo-section {
+            padding: 60px 24px 100px;
+            background: var(--bg-primary);
+        }
+
+        .demo-window {
+            max-width: 700px;
+            margin: 0 auto;
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4), 0 0 60px rgba(74, 222, 128, 0.04);
+        }
+
+        .demo-titlebar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 18px;
+            background: var(--bg-elevated);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .demo-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .demo-dot.red { background: #ff5f57; }
+        .demo-dot.yellow { background: #febc2e; }
+        .demo-dot.green { background: #28c840; }
+
+        .demo-titlebar-text {
+            flex: 1;
             text-align: center;
-            animation: fadeUp 0.6s 0.5s var(--ease-out) both;
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+
+        .demo-body {
+            padding: 28px 24px;
+            min-height: 120px;
+            position: relative;
         }
 
         .demo-label {
-            font-family: "DM Sans", sans-serif;
             font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 0.12em;
             color: var(--text-tertiary);
             font-weight: 600;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
-        .demo-flow {
+        .demo-text {
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 60px;
+        }
+
+        .demo-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background: var(--accent);
+            margin-left: 2px;
+            vertical-align: text-bottom;
+            animation: cursorBlink 1s step-end infinite;
+        }
+
+        @keyframes cursorBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .demo-status {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 12px;
-            font-size: 1rem;
-            color: var(--text-secondary);
-            flex-wrap: wrap;
-        }
-
-        .key {
-            font-family: "JetBrains Mono", monospace;
-            font-size: 0.88rem;
-            font-weight: 500;
-            padding: 8px 16px;
-            background: var(--bg-elevated);
-            border: 1px solid var(--border-hover);
-            border-radius: 8px;
-            color: var(--text-primary);
-            letter-spacing: 0.02em;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.04);
-        }
-
-        .demo-arrow {
+            justify-content: space-between;
+            padding: 12px 24px;
+            border-top: 1px solid var(--border);
+            font-size: 0.72rem;
             color: var(--text-tertiary);
-            font-size: 1.1rem;
         }
 
-        .demo-step {
-            font-weight: 500;
+        .demo-status-recording {
+            display: flex;
+            align-items: center;
+            gap: 6px;
             color: var(--accent);
+            font-weight: 600;
+        }
+
+        .demo-status-recording .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: pulse-dot 1s infinite;
         }
 
         /* ================================================
            SECTION SHARED
            ================================================ */
 
-        section {
-            padding: 100px 24px;
-        }
+        section { padding: 100px 24px; }
 
         .section-inner {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
@@ -447,7 +717,7 @@
         }
 
         .section-title {
-            font-size: clamp(1.8rem, 4vw, 2.4rem);
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
             font-weight: 700;
             margin-bottom: 16px;
         }
@@ -455,8 +725,8 @@
         .section-desc {
             font-size: 1.05rem;
             color: var(--text-secondary);
-            max-width: 520px;
-            line-height: 1.6;
+            max-width: 560px;
+            line-height: 1.65;
         }
 
         .section-header {
@@ -464,9 +734,7 @@
             margin-bottom: 64px;
         }
 
-        .section-header .section-desc {
-            margin: 0 auto;
-        }
+        .section-header .section-desc { margin: 0 auto; }
 
         /* ================================================
            FEATURES
@@ -474,16 +742,16 @@
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
         }
 
         .feature-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 32px 28px;
-            transition: all 0.3s var(--ease-out);
+            border-radius: 18px;
+            padding: 32px 26px;
+            transition: all 0.4s var(--ease-out);
             position: relative;
             overflow: hidden;
         }
@@ -494,19 +762,18 @@
             inset: -1px;
             border-radius: inherit;
             opacity: 0;
-            transition: opacity 0.3s var(--ease-out);
-            background: radial-gradient(ellipse at top, rgba(74, 222, 128, 0.04) 0%, transparent 60%);
+            transition: opacity 0.4s var(--ease-out);
+            background: radial-gradient(ellipse at top, rgba(74, 222, 128, 0.06) 0%, transparent 50%);
             pointer-events: none;
         }
 
         .feature-card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-4px);
+            border-color: rgba(74, 222, 128, 0.15);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(74, 222, 128, 0.05);
         }
 
-        .feature-card:hover::before {
-            opacity: 1;
-        }
+        .feature-card:hover::before { opacity: 1; }
 
         .feature-icon {
             width: 44px;
@@ -515,23 +782,128 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
-            margin-bottom: 20px;
-            background: var(--accent-muted);
-            border: 1px solid rgba(74, 222, 128, 0.08);
+            font-size: 1.2rem;
+            margin-bottom: 18px;
+            border: 1px solid;
         }
 
+        .feature-icon.fi-green { background: var(--green-bg); border-color: rgba(74, 222, 128, 0.08); }
+        .feature-icon.fi-blue { background: var(--blue-bg); border-color: rgba(91, 156, 245, 0.08); }
+        .feature-icon.fi-purple { background: var(--purple-bg); border-color: rgba(167, 139, 250, 0.08); }
+        .feature-icon.fi-gold { background: var(--gold-bg); border-color: var(--gold-border); }
+
         .feature-card h3 {
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 700;
             margin-bottom: 8px;
             letter-spacing: -0.02em;
         }
 
         .feature-card p {
-            font-size: 0.88rem;
+            font-size: 0.84rem;
             color: var(--text-secondary);
             line-height: 1.6;
+        }
+
+        /* ================================================
+           USE CASES
+           ================================================ */
+
+        .usecases-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .usecase-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px 28px;
+            display: flex;
+            gap: 20px;
+            transition: all 0.3s var(--ease-out);
+        }
+
+        .usecase-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        .usecase-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            background: var(--accent-muted);
+            border: 1px solid rgba(74, 222, 128, 0.08);
+        }
+
+        .usecase-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .usecase-card p {
+            font-size: 0.86rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ================================================
+           ROADMAP / COMING SOON
+           ================================================ */
+
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .roadmap-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 24px;
+            position: relative;
+            transition: all 0.3s var(--ease-out);
+        }
+
+        .roadmap-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        .roadmap-badge {
+            display: inline-flex;
+            padding: 3px 10px;
+            border-radius: 100px;
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .roadmap-badge.soon { background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold-border); }
+        .roadmap-badge.planned { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(91, 156, 245, 0.15); }
+        .roadmap-badge.live { background: var(--green-bg); color: var(--green); border: 1px solid rgba(74, 222, 128, 0.15); }
+
+        .roadmap-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .roadmap-card p {
+            font-size: 0.84rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
         }
 
         /* ================================================
@@ -554,9 +926,7 @@
             position: relative;
         }
 
-        .pricing-card:hover {
-            border-color: var(--border-hover);
-        }
+        .pricing-card:hover { border-color: var(--border-hover); }
 
         .pricing-card.featured {
             border-color: rgba(74, 222, 128, 0.2);
@@ -694,6 +1064,7 @@
         .pricing-btn-ghost {
             background: var(--bg-glass);
             color: var(--text-secondary);
+            border: 1px solid var(--border);
         }
 
         .pricing-btn-ghost:hover {
@@ -701,14 +1072,160 @@
             color: var(--text-primary);
         }
 
+        .pricing-note {
+            text-align: center;
+            margin-top: 28px;
+            font-size: 0.82rem;
+            color: var(--text-tertiary);
+        }
+
+        .pricing-note a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* ================================================
+           STATS BAR
+           ================================================ */
+
+        .stats-bar {
+            padding: 64px 24px;
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-deep) 100%);
+        }
+
+        .stats-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item {
+            position: relative;
+        }
+
+        .stat-item::after {
+            content: '';
+            position: absolute;
+            right: -20px;
+            top: 10%;
+            height: 80%;
+            width: 1px;
+            background: var(--border);
+        }
+
+        .stat-item:last-child::after { display: none; }
+
+        .stat-number {
+            font-family: "Outfit", sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ================================================
+           COMPARISON TABLE
+           ================================================ */
+
+        .compare-table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .compare-table {
+            width: 100%;
+            min-width: 900px;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .compare-table thead th {
+            font-family: "Outfit", sans-serif;
+            font-weight: 600;
+            font-size: 0.82rem;
+            letter-spacing: -0.01em;
+            padding: 16px 14px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-elevated);
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .compare-table thead th:first-child {
+            text-align: left;
+            border-radius: 16px 0 0 0;
+        }
+
+        .compare-table thead th:last-child { border-radius: 0 16px 0 0; }
+
+        .compare-table thead th.col-highlight {
+            color: var(--accent);
+            background: rgba(74, 222, 128, 0.06);
+            position: relative;
+        }
+
+        .compare-table thead th.col-highlight::after {
+            content: "You're here";
+            display: block;
+            font-family: "DM Sans", sans-serif;
+            font-size: 0.6rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--accent);
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+
+        .compare-table tbody td {
+            padding: 13px 14px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            vertical-align: middle;
+        }
+
+        .compare-table tbody td:first-child {
+            text-align: left;
+            font-weight: 500;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        .compare-table tbody td.col-highlight { background: rgba(74, 222, 128, 0.03); }
+
+        .compare-table tbody tr:last-child td:first-child { border-radius: 0 0 0 16px; }
+        .compare-table tbody tr:last-child td:last-child { border-radius: 0 0 16px 0; }
+
+        .compare-table tbody tr:hover td { background: var(--bg-glass-hover); }
+        .compare-table tbody tr:hover td.col-highlight { background: rgba(74, 222, 128, 0.06); }
+
+        .tbl-check { color: var(--accent); font-size: 1.1rem; }
+        .tbl-x { color: var(--text-tertiary); font-size: 0.9rem; }
+        .tbl-note { font-size: 0.72rem; color: var(--text-tertiary); display: block; margin-top: 2px; }
+
         /* ================================================
            INSTALLATION
            ================================================ */
 
-        .install-section {
-            max-width: 680px;
-            margin: 0 auto;
-        }
+        .install-section { max-width: 680px; margin: 0 auto; }
 
         .install-card {
             background: var(--bg-card);
@@ -740,9 +1257,7 @@
             transition: all 0.2s var(--ease-out);
         }
 
-        .install-tab:hover {
-            color: var(--text-secondary);
-        }
+        .install-tab:hover { color: var(--text-secondary); }
 
         .install-tab.active {
             background: var(--bg-elevated);
@@ -750,9 +1265,7 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
 
-        .install-content {
-            display: none;
-        }
+        .install-content { display: none; }
 
         .install-content.active {
             display: block;
@@ -798,13 +1311,7 @@
             line-height: 1.8;
         }
 
-        .install-steps strong {
-            color: var(--text-primary);
-        }
-
-        /* ================================================
-           REQUIREMENTS
-           ================================================ */
+        .install-steps strong { color: var(--text-primary); }
 
         .req-card {
             background: var(--bg-card);
@@ -812,14 +1319,10 @@
             border-radius: 16px;
             padding: 32px;
             max-width: 680px;
-            margin: 0 auto;
+            margin: 24px auto 0;
         }
 
-        .req-card h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
+        .req-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; }
 
         .req-list {
             list-style: none;
@@ -850,177 +1353,232 @@
         }
 
         /* ================================================
+           FAQ
+           ================================================ */
+
+        .faq-list {
+            max-width: 720px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .faq-item:hover { border-color: var(--border-hover); }
+
+        .faq-question {
+            width: 100%;
+            padding: 20px 24px;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-family: "DM Sans", sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.3rem;
+            color: var(--text-tertiary);
+            transition: transform 0.3s var(--ease-out);
+            flex-shrink: 0;
+        }
+
+        .faq-item.open .faq-question::after {
+            transform: rotate(45deg);
+            color: var(--accent);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s var(--ease-out);
+        }
+
+        .faq-answer-inner {
+            padding: 0 24px 20px;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .faq-item.open .faq-answer { max-height: 300px; }
+
+        /* ================================================
+           FINAL CTA
+           ================================================ */
+
+        .final-cta {
+            text-align: center;
+            padding: 120px 24px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-primary) 100%);
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            width: 900px;
+            height: 900px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(74, 222, 128, 0.08) 0%, rgba(91, 156, 245, 0.03) 40%, transparent 65%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            animation: heroGlow 8s ease-in-out infinite alternate;
+        }
+
+        .final-cta .section-inner { position: relative; z-index: 1; }
+
+        .final-cta h2 {
+            font-size: clamp(2rem, 4.5vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.04em;
+        }
+
+        .final-cta .section-desc {
+            margin: 0 auto 40px;
+            max-width: 480px;
+        }
+
+        .final-cta-buttons {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .final-cta-note {
+            margin-top: 16px;
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+        }
+
+        /* ================================================
            FOOTER
            ================================================ */
 
         .site-footer {
             border-top: 1px solid var(--border);
-            padding: 40px 24px;
-            text-align: center;
+            padding: 48px 24px;
         }
 
         .footer-inner {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .footer-brand { max-width: 260px; }
+
+        .footer-brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            text-decoration: none;
+        }
+
+        .footer-brand-logo svg { width: 24px; height: 24px; }
+
+        .footer-brand-logo span {
+            font-family: "Outfit", sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .footer-brand p {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .footer-cols {
+            display: flex;
+            gap: 56px;
+        }
+
+        .footer-col h4 {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+
+        .footer-col a {
+            display: block;
+            font-size: 0.82rem;
+            color: var(--text-tertiary);
+            text-decoration: none;
+            margin-bottom: 8px;
+            transition: color 0.15s;
+        }
+
+        .footer-col a:hover { color: var(--text-secondary); }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 32px auto 0;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
-        }
-
-        .footer-left {
-            font-size: 0.82rem;
-            color: var(--text-tertiary);
-        }
-
-        .footer-left a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.15s;
-        }
-
-        .footer-left a:hover {
-            color: var(--accent);
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 24px;
-        }
-
-        .footer-links a {
-            font-size: 0.82rem;
-            color: var(--text-tertiary);
-            text-decoration: none;
-            transition: color 0.15s;
-        }
-
-        .footer-links a:hover {
-            color: var(--text-secondary);
-        }
-
-        /* ================================================
-           COMPARISON TABLE
-           ================================================ */
-
-        .compare-table-wrap {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-        }
-
-        .compare-table {
-            width: 100%;
-            min-width: 820px;
-            border-collapse: collapse;
-            font-size: 0.85rem;
-        }
-
-        .compare-table thead th {
-            font-family: "Outfit", sans-serif;
-            font-weight: 600;
-            font-size: 0.82rem;
-            letter-spacing: -0.01em;
-            padding: 16px 14px;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-            background: var(--bg-elevated);
-            color: var(--text-secondary);
-            white-space: nowrap;
-        }
-
-        .compare-table thead th:first-child {
-            text-align: left;
-            border-radius: 16px 0 0 0;
-        }
-
-        .compare-table thead th:last-child {
-            border-radius: 0 16px 0 0;
-        }
-
-        .compare-table thead th.col-highlight {
-            color: var(--accent);
-            background: rgba(74, 222, 128, 0.06);
-            position: relative;
-        }
-
-        .compare-table thead th.col-highlight::after {
-            content: "You're here";
-            display: block;
-            font-family: "DM Sans", sans-serif;
-            font-size: 0.6rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--accent);
-            opacity: 0.7;
-            margin-top: 2px;
-        }
-
-        .compare-table tbody td {
-            padding: 13px 14px;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-            color: var(--text-secondary);
-            vertical-align: middle;
-        }
-
-        .compare-table tbody td:first-child {
-            text-align: left;
-            font-weight: 500;
-            color: var(--text-primary);
-            white-space: nowrap;
-        }
-
-        .compare-table tbody td.col-highlight {
-            background: rgba(74, 222, 128, 0.03);
-        }
-
-        .compare-table tbody tr:last-child td:first-child {
-            border-radius: 0 0 0 16px;
-        }
-
-        .compare-table tbody tr:last-child td:last-child {
-            border-radius: 0 0 16px 0;
-        }
-
-        .compare-table tbody tr:hover td {
-            background: var(--bg-glass-hover);
-        }
-
-        .compare-table tbody tr:hover td.col-highlight {
-            background: rgba(74, 222, 128, 0.06);
-        }
-
-        .tbl-check {
-            color: var(--accent);
-            font-size: 1.1rem;
-        }
-
-        .tbl-x {
-            color: var(--text-tertiary);
-            font-size: 0.9rem;
-        }
-
-        .tbl-note {
             font-size: 0.75rem;
             color: var(--text-tertiary);
-            display: block;
-            margin-top: 2px;
         }
+
+        .footer-bottom a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .footer-bottom a:hover { color: var(--accent); }
 
         /* ================================================
            RESPONSIVE
            ================================================ */
 
         @media (max-width: 768px) {
-            .nav-links a:not(.nav-cta) {
-                display: none;
-            }
+            .nav-links { display: none; }
+            .nav-hamburger { display: block; }
 
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
+            .hero { padding: 120px 20px 60px; }
+
+            .how-steps { grid-template-columns: 1fr; gap: 24px; }
+
+            .features-grid { grid-template-columns: 1fr; }
+
+            .usecases-grid { grid-template-columns: 1fr; }
+            .usecase-card { flex-direction: column; gap: 14px; }
+
+            .roadmap-grid { grid-template-columns: 1fr; }
 
             .pricing-grid {
                 grid-template-columns: 1fr;
@@ -1028,44 +1586,36 @@
                 margin: 0 auto;
             }
 
-            .footer-inner {
-                flex-direction: column;
-                gap: 20px;
-            }
+            .compare-table-wrap { margin: 0 -8px; border-radius: 12px; }
+            .compare-table { font-size: 0.78rem; }
 
-            .compare-table-wrap {
-                margin: 0 -8px;
-                border-radius: 12px;
-            }
+            section { padding: 64px 20px; }
+            .how-section, .demo-section { padding: 64px 20px; }
 
-            .compare-table {
-                font-size: 0.78rem;
-            }
+            .footer-inner { flex-direction: column; }
+            .footer-cols { gap: 32px; }
+            .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
 
-            section {
-                padding: 64px 20px;
-            }
+            .trust-inner { gap: 24px; }
 
-            .hero {
-                padding: 120px 20px 80px;
-            }
+            .stats-inner { grid-template-columns: 1fr; gap: 28px; }
+            .stat-item::after { display: none; }
         }
 
         @media (max-width: 900px) and (min-width: 769px) {
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .pricing-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .pricing-grid { grid-template-columns: repeat(2, 1fr); }
             .pricing-card:last-child {
                 grid-column: 1 / -1;
                 max-width: 400px;
                 margin: 0 auto;
                 width: 100%;
             }
+            .roadmap-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 1100px) and (min-width: 901px) {
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         /* ================================================
@@ -1074,14 +1624,23 @@
 
         .reveal {
             opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+            transform: translateY(32px);
+            transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
         }
 
         .reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Stagger delays for grids */
+        .reveal-d1 { transition-delay: 0.08s; }
+        .reveal-d2 { transition-delay: 0.16s; }
+        .reveal-d3 { transition-delay: 0.24s; }
+        .reveal-d4 { transition-delay: 0.32s; }
+        .reveal-d5 { transition-delay: 0.40s; }
+        .reveal-d6 { transition-delay: 0.48s; }
+        .reveal-d7 { transition-delay: 0.56s; }
     </style>
 </head>
 <body>
@@ -1101,24 +1660,42 @@
             </a>
             <div class="nav-links">
                 <a href="#features">Features</a>
+                <a href="#use-cases">Use Cases</a>
                 <a href="#pricing">Pricing</a>
                 <a href="#compare">Compare</a>
-                <a href="#install">Install</a>
-                <a href="#download" class="nav-cta">Download</a>
+                <a href="#download" class="nav-cta">Get Started</a>
             </div>
+            <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
 
-    <!-- HERO -->
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#features" onclick="closeMobileMenu()">Features</a>
+        <a href="#use-cases" onclick="closeMobileMenu()">Use Cases</a>
+        <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
+        <a href="#compare" onclick="closeMobileMenu()">Compare</a>
+        <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
+        <a href="#download" class="nav-cta" onclick="closeMobileMenu()">Get Started</a>
+    </div>
+
+    <!-- ================================================
+         HERO
+         ================================================ -->
     <section class="hero">
+        <div class="hero-waveform" id="heroWave"></div>
         <div class="hero-inner">
             <div class="hero-badge">
                 <span class="hero-badge-dot"></span>
-                Now available on macOS &amp; Windows
+                Available on macOS &amp; Windows
             </div>
-            <h1><span class="gradient">Voice to text,</span><br>instantly at your cursor</h1>
+            <h1>
+                <span class="gradient">Type 3x faster</span><br>with your voice
+            </h1>
             <p class="hero-sub">
-                Hold a hotkey, speak, release. Your words appear wherever your cursor is — emails, docs, code, chat. Anywhere.
+                Your keyboard is slowing you down. Hold a key, speak naturally, and watch your words appear instantly — in any app. No menus. No windows. Just your voice.
             </p>
             <div class="hero-buttons" id="download">
                 <a href="https://github.com/vasiels/voicebee-site/releases/latest/download/VoiceBee.dmg" class="dl-btn dl-btn-mac">
@@ -1130,131 +1707,331 @@
                     Download for Windows
                 </a>
             </div>
-            <p class="hero-version">
-                Version <span id="version">0.7.8</span> &middot;
-                <a href="https://github.com/vasiels/voicebee-site/releases">All releases</a>
+            <p class="hero-meta">
+                Try the free tier &middot; Pro from $10/mo &middot;
+                v<span id="version">0.7.8</span> &middot;
+                <a href="https://github.com/vasiels/voicebee-site/releases">Changelog</a>
             </p>
-        </div>
-
-        <!-- Demo -->
-        <div class="demo">
-            <div class="demo-label">How it works</div>
-            <div class="demo-flow">
-                Hold <span class="key">Alt</span> <span class="key">Space</span>
-                <span class="demo-arrow">&rarr;</span>
-                <span class="demo-step">Speak</span>
-                <span class="demo-arrow">&rarr;</span>
-                <span class="demo-step">Release</span>
-            </div>
         </div>
     </section>
 
-    <!-- FEATURES -->
+    <!-- ================================================
+         TRUST BAR
+         ================================================ -->
+    <div class="trust-bar">
+        <div class="trust-inner">
+            <div class="trust-item">
+                <div class="trust-icon green">&#128274;</div>
+                <span>Audio stays on your device</span>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon blue">&#9889;</div>
+                <span>Sub-second latency</span>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon purple">&#127916;</div>
+                <span>Powered by Whisper AI</span>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon green">&#128187;</div>
+                <span>macOS &amp; Windows</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================
+         HOW IT WORKS
+         ================================================ -->
+    <div class="how-section">
+        <div class="how-inner">
+            <div class="section-header reveal">
+                <div class="section-label">How It Works</div>
+                <h2 class="section-title">Three seconds. That's it.</h2>
+                <p class="section-desc">No setup wizard. No training. No learning curve. VoiceBee works the first time you try it.</p>
+            </div>
+            <div class="how-steps">
+                <div class="how-step reveal reveal-d1">
+                    <div class="how-step-num">1</div>
+                    <h3>Hold your hotkey</h3>
+                    <p>Press <span class="key">Alt</span> + <span class="key">Space</span> anywhere on your computer. In any app, any text field.</p>
+                </div>
+                <div class="how-step reveal reveal-d2">
+                    <div class="how-step-num">2</div>
+                    <h3>Speak naturally</h3>
+                    <p>Talk at your normal pace. VoiceBee handles punctuation, capitalization, and formatting automatically.</p>
+                </div>
+                <div class="how-step reveal reveal-d3">
+                    <div class="how-step-num">3</div>
+                    <h3>Release and done</h3>
+                    <p>Your words appear instantly at the cursor. No copy-paste. No extra clicks. It just works.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================
+         LIVE DEMO
+         ================================================ -->
+    <div class="demo-section">
+        <div class="demo-window reveal">
+            <div class="demo-titlebar">
+                <span class="demo-dot red"></span>
+                <span class="demo-dot yellow"></span>
+                <span class="demo-dot green"></span>
+                <span class="demo-titlebar-text">Gmail — New Message</span>
+            </div>
+            <div class="demo-body">
+                <div class="demo-label">VoiceBee is typing...</div>
+                <div class="demo-text" id="demoText"><span class="demo-cursor"></span></div>
+            </div>
+            <div class="demo-status">
+                <div class="demo-status-recording">
+                    <span class="dot"></span>
+                    Listening...
+                </div>
+                <span>Whisper AI &middot; Local mode</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================
+         STATS
+         ================================================ -->
+    <div class="stats-bar">
+        <div class="stats-inner reveal">
+            <div class="stat-item">
+                <div class="stat-number" data-count="10">10+</div>
+                <div class="stat-label">Languages supported</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">&lt;100ms</div>
+                <div class="stat-label">Average latency</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">99.2%</div>
+                <div class="stat-label">Transcription accuracy</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================
+         FEATURES
+         ================================================ -->
     <section id="features">
         <div class="section-inner">
             <div class="section-header reveal">
                 <div class="section-label">Features</div>
-                <h2 class="section-title">Built for speed and simplicity</h2>
-                <p class="section-desc">No menus, no clicks, no window switching. Just hold, speak, and your words appear.</p>
+                <h2 class="section-title">Everything you need. Nothing you don't.</h2>
+                <p class="section-desc">Built for people who care about speed, privacy, and getting things done.</p>
             </div>
             <div class="features-grid">
-                <div class="feature-card reveal">
-                    <div class="feature-icon">&#9889;</div>
-                    <h3>Instant Transcription</h3>
-                    <p>Hold a hotkey, speak, release. Text appears at your cursor in under a second.</p>
+                <div class="feature-card reveal reveal-d1">
+                    <div class="feature-icon fi-green">&#9889;</div>
+                    <h3>Sub-second dictation</h3>
+                    <p>Your words appear before you finish your thought. No loading spinners, no lag, no waiting.</p>
                 </div>
-                <div class="feature-card reveal">
-                    <div class="feature-icon">&#127919;</div>
-                    <h3>Works Everywhere</h3>
-                    <p>Emails, documents, Slack, code editors, browsers — VoiceBee types wherever your cursor is.</p>
+                <div class="feature-card reveal reveal-d2">
+                    <div class="feature-icon fi-blue">&#127919;</div>
+                    <h3>Works in every app</h3>
+                    <p>Gmail, Slack, VS Code, Notion, Chrome — if it has a text field, VoiceBee works there.</p>
                 </div>
-                <div class="feature-card reveal">
-                    <div class="feature-icon">&#128274;</div>
-                    <h3>Privacy First</h3>
-                    <p>Audio stays on your device. Recordings are never uploaded. Only text is synced if you choose.</p>
+                <div class="feature-card reveal reveal-d3">
+                    <div class="feature-icon fi-purple">&#128274;</div>
+                    <h3>Your voice never leaves</h3>
+                    <p>Local Whisper processing means zero uploads, zero cloud storage, zero risk. Audio deleted after transcription.</p>
                 </div>
-                <div class="feature-card reveal">
-                    <div class="feature-icon">&#127760;</div>
-                    <h3>Local + Cloud STT</h3>
-                    <p>Use Whisper locally for full privacy, or OpenAI cloud for maximum accuracy. Your choice.</p>
+                <div class="feature-card reveal reveal-d4">
+                    <div class="feature-icon fi-gold">&#127760;</div>
+                    <h3>Your privacy, your rules</h3>
+                    <p>Use on-device Whisper for full privacy, or cloud AI for maximum accuracy. Switch anytime with one click.</p>
                 </div>
-                <div class="feature-card reveal">
-                    <div class="feature-icon">&#128488;</div>
-                    <h3>10+ Languages</h3>
-                    <p>English, Greek, Spanish, French, German, Japanese, Chinese, and more — with auto-detection.</p>
+                <div class="feature-card reveal reveal-d5">
+                    <div class="feature-icon fi-blue">&#128488;</div>
+                    <h3>Speak any language</h3>
+                    <p>English, Greek, Spanish, German, French, Japanese, Chinese, and more — with automatic language detection.</p>
                 </div>
-                <div class="feature-card reveal">
-                    <div class="feature-icon">&#128337;</div>
-                    <h3>History &amp; Export</h3>
-                    <p>Every transcription saved with timestamp. Search, copy, retry, or export your full history.</p>
+                <div class="feature-card reveal reveal-d6">
+                    <div class="feature-icon fi-green">&#128203;</div>
+                    <h3>Never lose a word</h3>
+                    <p>Every transcription saved with timestamps. Search, copy, or export your entire history in one click.</p>
+                </div>
+                <div class="feature-card reveal reveal-d7">
+                    <div class="feature-icon fi-purple">&#129482;</div>
+                    <h3>Lightweight &amp; fast</h3>
+                    <p>Under 100MB. No background processes eating your RAM. VoiceBee sleeps until you need it.</p>
+                </div>
+                <div class="feature-card reveal reveal-d7">
+                    <div class="feature-icon fi-gold">&#128187;</div>
+                    <h3>Mac + Windows</h3>
+                    <p>Same app, same features, same hotkey. Switch between platforms without missing a beat.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PRICING -->
+    <!-- ================================================
+         USE CASES
+         ================================================ -->
+    <section id="use-cases" style="background: var(--bg-primary);">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-label">Use Cases</div>
+                <h2 class="section-title">Built for how you actually work</h2>
+                <p class="section-desc">Whether you write code, emails, or novels — VoiceBee adapts to your workflow.</p>
+            </div>
+            <div class="usecases-grid">
+                <div class="usecase-card reveal reveal-d1">
+                    <div class="usecase-icon">&#9997;&#65039;</div>
+                    <div>
+                        <h3>Writers &amp; Content Creators</h3>
+                        <p>Draft blog posts, emails, and social content 3x faster. Think out loud and let VoiceBee capture every word as you speak.</p>
+                    </div>
+                </div>
+                <div class="usecase-card reveal reveal-d2">
+                    <div class="usecase-icon">&#128187;</div>
+                    <div>
+                        <h3>Developers</h3>
+                        <p>Dictate comments, documentation, commit messages, and Slack replies without leaving your IDE. Works in VS Code, Cursor, and every editor.</p>
+                    </div>
+                </div>
+                <div class="usecase-card reveal reveal-d3">
+                    <div class="usecase-icon">&#128188;</div>
+                    <div>
+                        <h3>Business Professionals</h3>
+                        <p>Write emails, reports, and presentations in seconds. Perfect for those back-to-back meeting days when typing feels impossible.</p>
+                    </div>
+                </div>
+                <div class="usecase-card reveal reveal-d4">
+                    <div class="usecase-icon">&#127891;</div>
+                    <div>
+                        <h3>Students &amp; Researchers</h3>
+                        <p>Capture lecture notes in real-time, draft essays faster, and never lose an idea again. Your brain moves faster than your fingers — let VoiceBee keep up.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================
+         COMING SOON / ROADMAP
+         ================================================ -->
+    <section id="roadmap">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-label">Roadmap</div>
+                <h2 class="section-title">We're just getting started</h2>
+                <p class="section-desc">VoiceBee is evolving fast. Here's what's coming next.</p>
+            </div>
+            <div class="roadmap-grid">
+                <div class="roadmap-card reveal reveal-d1">
+                    <span class="roadmap-badge soon">Coming Soon</span>
+                    <h3>Voice Snippets</h3>
+                    <p>Create reusable text blocks triggered by voice. Say "my address" and your full address appears. Say "email signature" and it's there.</p>
+                </div>
+                <div class="roadmap-card reveal reveal-d2">
+                    <span class="roadmap-badge soon">Coming Soon</span>
+                    <h3>AI Smart Rewrite</h3>
+                    <p>AI auto-adjusts your tone based on the app. Casual in Slack. Professional in Gmail. Technical in your code editor.</p>
+                </div>
+                <div class="roadmap-card reveal reveal-d3">
+                    <span class="roadmap-badge soon">Coming Soon</span>
+                    <h3>Custom Dictionaries</h3>
+                    <p>Teach VoiceBee your industry jargon, brand names, and technical terms. Medical, legal, and engineering packs built-in.</p>
+                </div>
+                <div class="roadmap-card reveal reveal-d4">
+                    <span class="roadmap-badge planned">Planned</span>
+                    <h3>AI Dictation Mode</h3>
+                    <p>Say "write an email declining this meeting" and AI writes it for you — right at the cursor. No ChatGPT tab needed.</p>
+                </div>
+                <div class="roadmap-card reveal reveal-d5">
+                    <span class="roadmap-badge planned">Planned</span>
+                    <h3>Voice Profiles</h3>
+                    <p>VoiceBee learns YOUR voice specifically, improving accuracy to 99%+ over time. Your voiceprint stays on-device.</p>
+                </div>
+                <div class="roadmap-card reveal reveal-d6">
+                    <span class="roadmap-badge planned">Planned</span>
+                    <h3>Teams &amp; Enterprise</h3>
+                    <p>Shared dictionaries, team snippets, admin controls, SSO, HIPAA/SOC2 compliance. Built for organizations that move fast.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================
+         PRICING
+         ================================================ -->
     <section id="pricing" style="background: var(--bg-primary);">
         <div class="section-inner">
             <div class="section-header reveal">
                 <div class="section-label">Pricing</div>
-                <h2 class="section-title">Start free, upgrade when ready</h2>
-                <p class="section-desc">No credit card required. Get 2,500 words per week free, forever.</p>
+                <h2 class="section-title">Simple pricing. No surprises.</h2>
+                <p class="section-desc">Start with the free tier, or go Pro for unlimited dictation. Cancel anytime.</p>
             </div>
             <div class="pricing-grid">
                 <div class="pricing-card reveal">
-                    <div class="pricing-name">Free</div>
-                    <div class="pricing-desc">For trying out voice transcription</div>
+                    <div class="pricing-name">Starter</div>
+                    <div class="pricing-desc">Try VoiceBee with limited usage</div>
                     <div class="pricing-price">$0 <span>/mo</span></div>
-                    <div class="pricing-period">Free forever</div>
+                    <div class="pricing-period">2,500 words/week limit</div>
                     <ul class="pricing-features">
                         <li>2,500 words per week</li>
-                        <li>Local Whisper STT</li>
-                        <li>Cloud STT (within limit)</li>
+                        <li>Unlimited local Whisper STT</li>
+                        <li>Cloud STT (within word limit)</li>
                         <li>Full history &amp; export</li>
-                        <li>10+ languages</li>
+                        <li>10+ languages with auto-detection</li>
+                        <li>Works in every app</li>
                     </ul>
-                    <a href="#download" class="pricing-btn pricing-btn-outline">Download Free</a>
+                    <a href="#download" class="pricing-btn pricing-btn-outline">Get Started</a>
                 </div>
                 <div class="pricing-card featured reveal">
                     <div class="pricing-popular">Most Popular</div>
                     <div class="pricing-name">Pro</div>
-                    <div class="pricing-desc">For daily voice-to-text power users</div>
+                    <div class="pricing-desc">Unlimited dictation. Zero limits.</div>
                     <div class="pricing-price">$10 <span>/mo</span></div>
                     <div class="pricing-period">or $96/yr (save 20%)</div>
                     <ul class="pricing-features">
                         <li>Unlimited transcription</li>
                         <li>Priority cloud processing</li>
-                        <li>Local Whisper STT</li>
-                        <li>Full history &amp; export</li>
-                        <li>Early access to new features</li>
+                        <li>AI Smart Rewrite (coming soon)</li>
+                        <li>Voice Snippets (coming soon)</li>
+                        <li>Custom dictionaries</li>
+                        <li>Early access to all new features</li>
+                        <li>Priority email support</li>
                     </ul>
                     <a href="#download" class="pricing-btn pricing-btn-primary">Get Pro</a>
                 </div>
                 <div class="pricing-card reveal">
-                    <div class="pricing-name">Teams</div>
-                    <div class="pricing-desc">For organizations and teams</div>
-                    <div class="pricing-price">&mdash;</div>
-                    <div class="pricing-period">Coming soon</div>
+                    <div class="pricing-name">Enterprise</div>
+                    <div class="pricing-desc">For teams that need security, compliance, and control</div>
+                    <div class="pricing-price">Custom</div>
+                    <div class="pricing-period">Annual contract</div>
                     <ul class="pricing-features">
                         <li>Everything in Pro</li>
-                        <li>Team management</li>
-                        <li>Shared billing</li>
-                        <li>Admin controls</li>
-                        <li>Priority support</li>
+                        <li>SSO (Okta, Azure AD, Google)</li>
+                        <li>Team shared dictionaries</li>
+                        <li>Admin dashboard &amp; controls</li>
+                        <li>SOC 2 / HIPAA ready</li>
+                        <li>Dedicated account manager</li>
+                        <li>Custom onboarding</li>
                     </ul>
-                    <button class="pricing-btn pricing-btn-ghost" disabled style="opacity:0.5;cursor:default;">Coming Soon</button>
+                    <a href="mailto:enterprise@voicebee.app" class="pricing-btn pricing-btn-ghost">Contact Sales</a>
                 </div>
             </div>
+            <p class="pricing-note reveal">
+                Need something different? <a href="mailto:hello@voicebee.app">Talk to us</a>
+            </p>
         </div>
     </section>
 
-    <!-- COMPARISON -->
+    <!-- ================================================
+         COMPARISON
+         ================================================ -->
     <section id="compare">
         <div class="section-inner">
             <div class="section-header reveal">
                 <div class="section-label">Comparison</div>
-                <h2 class="section-title">How VoiceBee stacks up</h2>
-                <p class="section-desc">Side-by-side with every major voice-to-text app on the market.</p>
+                <h2 class="section-title">See how VoiceBee stacks up</h2>
+                <p class="section-desc">Side-by-side with every major voice dictation app on the market.</p>
             </div>
             <div class="compare-table-wrap reveal">
                 <table class="compare-table">
@@ -1263,30 +2040,30 @@
                             <th></th>
                             <th class="col-highlight">VoiceBee</th>
                             <th>Wispr Flow</th>
+                            <th>Willow Voice</th>
                             <th>SuperWhisper</th>
-                            <th>Typeless</th>
                             <th>VoiceInk</th>
-                            <th>OpenWhispr</th>
+                            <th>Speechify</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Free tier</td>
-                            <td class="col-highlight"><strong>∞ local</strong><span class="tbl-note">2,500 w/wk cloud</span></td>
+                            <td class="col-highlight"><strong>2,500 w/wk</strong><span class="tbl-note">Starter plan</span></td>
+                            <td>2,000 w/wk</td>
                             <td>2,000 w/wk</td>
                             <td>15 min total</td>
-                            <td>4,000 w/wk</td>
-                            <td><span class="tbl-x">&mdash;</span></td>
-                            <td>2,000 w/wk</td>
+                            <td><span class="tbl-x">&#10007;</span></td>
+                            <td>Limited</td>
                         </tr>
                         <tr>
                             <td>Pro price</td>
                             <td class="col-highlight"><strong>$10/mo</strong></td>
-                            <td>$12–15/mo</td>
+                            <td>$15/mo</td>
+                            <td>$15/mo</td>
                             <td>$8.49/mo</td>
-                            <td>$12–30/mo</td>
                             <td>$40 once</td>
-                            <td>$9/mo</td>
+                            <td>$11.58/mo</td>
                         </tr>
                         <tr>
                             <td>macOS</td>
@@ -1301,37 +2078,37 @@
                             <td>Windows</td>
                             <td class="col-highlight"><span class="tbl-check">&#10003;</span></td>
                             <td><span class="tbl-check">&#10003;</span></td>
-                            <td><span class="tbl-x">&#10007;</span></td>
                             <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-x">&#10007;</span></td>
                             <td><span class="tbl-x">&#10007;</span></td>
                             <td><span class="tbl-check">&#10003;</span></td>
                         </tr>
                         <tr>
                             <td>Local / Offline</td>
                             <td class="col-highlight"><span class="tbl-check">&#10003;</span></td>
-                            <td><span class="tbl-x">&#10007;</span></td>
+                            <td><span class="tbl-x">&#10007;</span><span class="tbl-note">cloud only</span></td>
+                            <td><span class="tbl-x">&#10007;</span><span class="tbl-note">cloud only</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
                             <td><span class="tbl-check">&#10003;</span></td>
                             <td><span class="tbl-x">&#10007;</span></td>
-                            <td><span class="tbl-check">&#10003;</span></td>
-                            <td><span class="tbl-check">&#10003;</span></td>
                         </tr>
                         <tr>
-                            <td>Cloud transcription</td>
+                            <td>Cloud + Local hybrid</td>
                             <td class="col-highlight"><span class="tbl-check">&#10003;</span></td>
-                            <td><span class="tbl-check">&#10003;</span><span class="tbl-note">cloud only</span></td>
-                            <td><span class="tbl-check">&#10003;</span></td>
-                            <td><span class="tbl-check">&#10003;</span><span class="tbl-note">cloud only</span></td>
+                            <td><span class="tbl-x">&#10007;</span></td>
                             <td><span class="tbl-x">&#10007;</span></td>
                             <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-x">&#10007;</span></td>
+                            <td><span class="tbl-x">&#10007;</span></td>
                         </tr>
                         <tr>
-                            <td>Open source</td>
-                            <td class="col-highlight"><span class="tbl-x">&#10007;</span></td>
-                            <td><span class="tbl-x">&#10007;</span></td>
-                            <td><span class="tbl-x">&#10007;</span></td>
-                            <td><span class="tbl-x">&#10007;</span></td>
+                            <td>Lightweight (&lt;100MB RAM)</td>
+                            <td class="col-highlight"><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-x">&#10007;</span><span class="tbl-note">~800MB</span></td>
                             <td><span class="tbl-check">&#10003;</span></td>
                             <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-check">&#10003;</span></td>
+                            <td><span class="tbl-x">&#10007;</span></td>
                         </tr>
                         <tr>
                             <td>Push-to-talk</td>
@@ -1357,13 +2134,15 @@
         </div>
     </section>
 
-    <!-- INSTALLATION -->
-    <section id="install">
+    <!-- ================================================
+         INSTALLATION
+         ================================================ -->
+    <section id="install" style="background: var(--bg-primary);">
         <div class="section-inner install-section">
             <div class="section-header reveal">
-                <div class="section-label">Installation</div>
-                <h2 class="section-title">Up and running in seconds</h2>
-                <p class="section-desc">VoiceBee is not yet code-signed. Here's how to open it on first launch.</p>
+                <div class="section-label">Quick Setup</div>
+                <h2 class="section-title">Ready in 30 seconds</h2>
+                <p class="section-desc">VoiceBee is an independent app. Your OS may ask for permission the first time — here's how to approve it instantly.</p>
             </div>
             <div class="install-card reveal">
                 <div class="install-tabs">
@@ -1372,31 +2151,30 @@
                 </div>
                 <div id="install-macos" class="install-content active">
                     <p class="install-text">
-                        macOS may show "VoiceBee is damaged and can't be opened" because the app is not yet code-signed.
+                        Since VoiceBee is distributed independently (not through the App Store), macOS Gatekeeper may require a one-time approval.
                     </p>
-                    <p class="install-label">Option 1 &mdash; Terminal command:</p>
+                    <p class="install-label">Option 1 — One terminal command:</p>
                     <code class="install-code">xattr -cr /Applications/VoiceBee.app</code>
-                    <p class="install-label">Option 2 &mdash; System Settings:</p>
+                    <p class="install-label">Option 2 — System Settings:</p>
                     <ol class="install-steps">
-                        <li>Try to open VoiceBee (it will fail)</li>
+                        <li>Open VoiceBee (macOS will show a security prompt)</li>
                         <li>Go to <strong>System Settings &rarr; Privacy &amp; Security</strong></li>
-                        <li>Scroll down and click <strong>"Open Anyway"</strong></li>
+                        <li>Click <strong>"Open Anyway"</strong> — done!</li>
                     </ol>
                 </div>
                 <div id="install-windows" class="install-content">
                     <p class="install-text">
-                        Windows may show a SmartScreen warning because the app is not yet code-signed.
+                        Windows SmartScreen may show a one-time warning for apps downloaded outside the Microsoft Store.
                     </p>
                     <ol class="install-steps">
                         <li>Run the installer (.exe file)</li>
-                        <li>If you see "Windows protected your PC", click <strong>"More info"</strong></li>
-                        <li>Click <strong>"Run anyway"</strong></li>
+                        <li>Click <strong>"More info"</strong> on the SmartScreen prompt</li>
+                        <li>Click <strong>"Run anyway"</strong> — you're all set!</li>
                     </ol>
                 </div>
             </div>
 
-            <!-- Requirements -->
-            <div class="req-card reveal" style="margin-top: 24px;">
+            <div class="req-card reveal">
                 <h3>System Requirements</h3>
                 <ul class="req-list">
                     <li><span class="req-check">&#10003;</span> macOS 10.15+ (Apple Silicon &amp; Intel) or Windows 10/11 (64-bit)</li>
@@ -1407,22 +2185,165 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- ================================================
+         FAQ
+         ================================================ -->
+    <section id="faq">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-label">FAQ</div>
+                <h2 class="section-title">Common questions</h2>
+            </div>
+            <div class="faq-list reveal">
+                <div class="faq-item">
+                    <button class="faq-question">How much does VoiceBee cost?</button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">VoiceBee has a free Starter tier with 2,500 words per week. For unlimited dictation, the Pro plan is $10/mo (or $96/yr). No credit card needed to try the Starter plan.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Is my voice data private?</button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">In local mode, your audio never leaves your computer. It's processed by Whisper AI directly on your device and deleted immediately after transcription. In cloud mode, audio is sent to OpenAI for processing — but never stored permanently.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Does it work offline?</button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">Yes. With local Whisper mode, VoiceBee works completely offline with no internet connection needed. Cloud mode requires internet but offers higher accuracy for complex sentences.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">What languages are supported?</button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">VoiceBee supports 10+ languages including English, Greek, Spanish, French, German, Italian, Portuguese, Japanese, Chinese, Korean, and more. Language detection is automatic — just start speaking.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">How is VoiceBee different from Wispr Flow?</button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">VoiceBee offers local + cloud hybrid processing (Wispr is cloud-only), uses under 100MB RAM (Wispr uses ~800MB), costs $10/mo vs $15/mo, and works offline — Wispr doesn't.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Why does my OS show a security warning?</button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">VoiceBee is distributed independently, not through the App Store or Microsoft Store. This is common for independent software. Both macOS and Windows will ask for a one-time approval — it takes 10 seconds. See the installation section above for step-by-step instructions.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Can I use VoiceBee for my team?</button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">Team and Enterprise plans are coming soon with shared dictionaries, team snippets, admin controls, SSO, and compliance features. Contact us at enterprise@voicebee.app to join the early access list.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================
+         FINAL CTA
+         ================================================ -->
+    <section class="final-cta">
+        <div class="section-inner reveal">
+            <h2><span class="gradient">Stop typing.</span> Start talking.</h2>
+            <p class="section-desc">
+                Download VoiceBee. Press a key, speak, and your words appear instantly. Try the Starter plan or go Pro for unlimited.
+            </p>
+            <div class="final-cta-buttons">
+                <a href="https://github.com/vasiels/voicebee-site/releases/latest/download/VoiceBee.dmg" class="dl-btn dl-btn-mac">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                    Download for macOS
+                </a>
+                <a href="https://github.com/vasiels/voicebee-site/releases/latest/download/VoiceBee_x64-setup.exe" class="dl-btn dl-btn-win">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 12V6.75l6-1.32v6.48L3 12zm17-9v8.75l-10 .15V5.21L20 3zM3 13l6 .09v6.81l-6-1.15V13zm17 .25V22l-10-1.91V13.1l10 .15z"/></svg>
+                    Download for Windows
+                </a>
+            </div>
+            <p class="final-cta-note">Starter: $0/mo (2,500 words/week) &middot; Pro: $10/mo (unlimited)</p>
+        </div>
+    </section>
+
+    <!-- ================================================
+         FOOTER
+         ================================================ -->
     <footer class="site-footer">
         <div class="footer-inner">
-            <div class="footer-left">
-                Made by <a href="https://github.com/vasiels">vasiels</a>
+            <div class="footer-brand">
+                <a href="#" class="footer-brand-logo">
+                    <svg viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="8" fill="url(#logo-g2)"/>
+                        <path d="M16 8c-2.2 0-4 1.8-4 4v4c0 2.2 1.8 4 4 4s4-1.8 4-4v-4c0-2.2-1.8-4-4-4z" fill="#0c0c0e" opacity="0.9"/>
+                        <path d="M22 15v1c0 3.3-2.7 6-6 6s-6-2.7-6-6v-1" stroke="#0c0c0e" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+                        <line x1="16" y1="22" x2="16" y2="25" stroke="#0c0c0e" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+                        <defs><linearGradient id="logo-g2" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#4ade80"/><stop offset="1" stop-color="#22c55e"/></linearGradient></defs>
+                    </svg>
+                    <span>VoiceBee</span>
+                </a>
+                <p>The fastest way from brain to screen. Voice dictation that works everywhere, respects your privacy, and costs less.</p>
             </div>
-            <div class="footer-links">
-                <a href="https://github.com/vasiels/voicebee-site/releases">Releases</a>
-                <a href="#features">Features</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#compare">Compare</a>
+            <div class="footer-cols">
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <a href="#features">Features</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#compare">Compare</a>
+                    <a href="#roadmap">Roadmap</a>
+                    <a href="https://github.com/vasiels/voicebee-site/releases">Changelog</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <a href="#install">Installation</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="mailto:hello@voicebee.app">Support</a>
+                    <a href="mailto:enterprise@voicebee.app">Enterprise</a>
+                </div>
             </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 VoiceBee. Made by <a href="https://github.com/vasiels">vasiels</a></span>
+            <span>Built with care in Greece</span>
         </div>
     </footer>
 
+    <!-- ================================================
+         SCRIPTS
+         ================================================ -->
     <script>
+        // Generate hero waveform bars
+        (function() {
+            const wave = document.getElementById('heroWave');
+            if (wave) {
+                const barCount = 80;
+                for (let i = 0; i < barCount; i++) {
+                    const bar = document.createElement('div');
+                    bar.className = 'bar';
+                    const delay = (Math.sin(i * 0.3) * 0.5 + 0.5) * 2;
+                    const duration = 1 + Math.random() * 2;
+                    bar.style.animationDelay = delay + 's';
+                    bar.style.animationDuration = duration + 's';
+                    bar.style.opacity = 0.3 + Math.random() * 0.7;
+                    wave.appendChild(bar);
+                }
+            }
+        })();
+
+        // Mobile menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileMenu.classList.toggle('open');
+            document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+        });
+
+        function closeMobileMenu() {
+            hamburger.classList.remove('open');
+            mobileMenu.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
         // Tab switching
         function showInstall(platform) {
             document.querySelectorAll('.install-tab').forEach(t => t.classList.remove('active'));
@@ -1440,14 +2361,63 @@
         // Scroll reveal
         const reveals = document.querySelectorAll('.reveal');
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, i) => {
+            entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    setTimeout(() => entry.target.classList.add('visible'), i * 80);
+                    entry.target.classList.add('visible');
                     observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
         reveals.forEach(el => observer.observe(el));
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-question').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                const isOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+                if (!isOpen) item.classList.add('open');
+            });
+        });
+
+        // Typing demo animation
+        const demoSentences = [
+            "Hi Sarah, thanks for sending over the Q3 report. I've reviewed the numbers and everything looks great. Let's schedule a call this Thursday to discuss next steps.",
+            "The new feature implementation is ready for code review. I've added unit tests and updated the documentation. Please take a look when you get a chance.",
+            "Dear team, just a quick update on the project timeline. We're on track to deliver the MVP by end of March. I'll share the detailed roadmap in tomorrow's standup."
+        ];
+
+        let sentenceIndex = 0;
+        let charIndex = 0;
+        const demoText = document.getElementById('demoText');
+
+        function typeNextChar() {
+            const sentence = demoSentences[sentenceIndex];
+            if (charIndex < sentence.length) {
+                demoText.innerHTML = sentence.substring(0, charIndex + 1) + '<span class="demo-cursor"></span>';
+                charIndex++;
+                const delay = 15 + Math.random() * 25;
+                setTimeout(typeNextChar, delay);
+            } else {
+                setTimeout(() => {
+                    charIndex = 0;
+                    sentenceIndex = (sentenceIndex + 1) % demoSentences.length;
+                    demoText.innerHTML = '<span class="demo-cursor"></span>';
+                    setTimeout(typeNextChar, 600);
+                }, 3000);
+            }
+        }
+
+        // Start typing when demo is visible
+        const demoObserver = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                setTimeout(typeNextChar, 800);
+                demoObserver.disconnect();
+            }
+        }, { threshold: 0.3 });
+
+        const demoWindow = document.querySelector('.demo-window');
+        if (demoWindow) demoObserver.observe(demoWindow);
     </script>
 </body>
 </html>
