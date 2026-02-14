@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VoiceBee — Type 3x Faster With Your Voice</title>
-    <meta name="description" content="The fastest way from brain to screen. Hold a key, speak, and your words appear instantly in any app. Local AI, cloud AI, or both. Mac & Windows. Free to start.">
+    <meta name="description" content="The fastest way from brain to screen. Hold a key, speak, and your words appear instantly in any app. Local AI, cloud AI, or both. Mac & Windows. Plans from $10/mo.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <meta name="theme-color" content="#0a0a1a">
     <meta property="og:title" content="VoiceBee — Type 3x Faster With Your Voice">
-    <meta property="og:description" content="Hold a key, speak, and your words appear instantly in any app. Local AI, cloud AI, or both. Mac & Windows. Free to start.">
+    <meta property="og:description" content="Hold a key, speak, and your words appear instantly in any app. Local AI, cloud AI, or both. Mac & Windows. Plans from $10/mo.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://voicebee.bytebee.gr">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="VoiceBee — Type 3x Faster With Your Voice">
-    <meta name="twitter:description" content="Hold a key, speak, and your words appear instantly in any app. Local AI, cloud AI, or both. Mac & Windows. Free to start.">
+    <meta name="twitter:description" content="Hold a key, speak, and your words appear instantly in any app. Local AI, cloud AI, or both. Mac & Windows. Plans from $10/mo.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -244,7 +244,7 @@
 
         .hero {
             position: relative;
-            padding: 160px 24px 80px;
+            padding: 180px 24px 100px;
             text-align: center;
             overflow: hidden;
         }
@@ -252,11 +252,11 @@
         .hero::before {
             content: '';
             position: absolute;
-            width: 900px;
-            height: 900px;
+            width: 1200px;
+            height: 1200px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(74, 222, 128, 0.08) 0%, transparent 65%);
-            top: 5%;
+            background: radial-gradient(circle, rgba(74, 222, 128, 0.1) 0%, rgba(91, 156, 245, 0.04) 40%, transparent 70%);
+            top: -10%;
             left: 50%;
             transform: translate(-50%, -30%);
             pointer-events: none;
@@ -266,19 +266,52 @@
         .hero::after {
             content: '';
             position: absolute;
-            width: 600px;
-            height: 600px;
+            width: 800px;
+            height: 800px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(91, 156, 245, 0.05) 0%, transparent 65%);
-            top: 55%;
-            right: -10%;
+            background: radial-gradient(circle, rgba(167, 139, 250, 0.06) 0%, transparent 65%);
+            top: 40%;
+            right: -15%;
             pointer-events: none;
-            animation: heroGlow 10s 2s ease-in-out infinite alternate;
+            animation: heroGlow2 12s 3s ease-in-out infinite alternate;
         }
 
         @keyframes heroGlow {
-            from { opacity: 0.6; transform: scale(1) translate(-50%, -30%); }
-            to { opacity: 1; transform: scale(1.1) translate(-50%, -30%); }
+            from { opacity: 0.5; transform: scale(1) translate(-50%, -30%); }
+            to { opacity: 1; transform: scale(1.15) translate(-50%, -30%); }
+        }
+
+        @keyframes heroGlow2 {
+            from { opacity: 0.3; transform: scale(1); }
+            to { opacity: 0.7; transform: scale(1.2); }
+        }
+
+        /* Animated waveform behind hero */
+        .hero-waveform {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 3px;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero-waveform .bar {
+            width: 3px;
+            border-radius: 2px;
+            background: var(--accent);
+            animation: waveBar 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes waveBar {
+            from { height: 20%; }
+            to { height: 90%; }
         }
 
         .hero-inner {
@@ -318,19 +351,26 @@
         }
 
         .hero h1 {
-            font-size: clamp(2.8rem, 6.5vw, 4.5rem);
+            font-size: clamp(3.2rem, 8vw, 5.5rem);
             font-weight: 800;
-            line-height: 1.05;
-            margin-bottom: 24px;
-            letter-spacing: -0.04em;
-            animation: fadeUp 0.6s 0.1s var(--ease-out) both;
+            line-height: 1.02;
+            margin-bottom: 28px;
+            letter-spacing: -0.045em;
+            animation: fadeUp 0.8s 0.1s var(--ease-out) both;
         }
 
         .hero h1 .gradient {
-            background: linear-gradient(135deg, var(--text-primary) 10%, var(--accent) 100%);
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 50%, #22c55e 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            background-size: 200% auto;
+            animation: fadeUp 0.8s 0.1s var(--ease-out) both, shimmer 6s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
         }
 
         .hero-sub {
@@ -394,11 +434,26 @@
             background: linear-gradient(135deg, var(--accent), #22c55e);
             color: var(--bg-deep);
             box-shadow: 0 4px 24px rgba(74, 222, 128, 0.25), 0 0 0 1px rgba(74, 222, 128, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dl-btn-mac::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .dl-btn-mac:hover::after {
+            transform: translateX(100%);
         }
 
         .dl-btn-mac:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 40px rgba(74, 222, 128, 0.35), 0 0 0 1px rgba(74, 222, 128, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 48px rgba(74, 222, 128, 0.4), 0 0 0 1px rgba(74, 222, 128, 0.2);
         }
 
         .dl-btn-win {
@@ -547,6 +602,7 @@
             border: 1px solid var(--border);
             border-radius: 16px;
             overflow: hidden;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4), 0 0 60px rgba(74, 222, 128, 0.04);
         }
 
         .demo-titlebar {
@@ -693,9 +749,9 @@
         .feature-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 28px 24px;
-            transition: all 0.3s var(--ease-out);
+            border-radius: 18px;
+            padding: 32px 26px;
+            transition: all 0.4s var(--ease-out);
             position: relative;
             overflow: hidden;
         }
@@ -706,14 +762,15 @@
             inset: -1px;
             border-radius: inherit;
             opacity: 0;
-            transition: opacity 0.3s var(--ease-out);
-            background: radial-gradient(ellipse at top, rgba(74, 222, 128, 0.04) 0%, transparent 60%);
+            transition: opacity 0.4s var(--ease-out);
+            background: radial-gradient(ellipse at top, rgba(74, 222, 128, 0.06) 0%, transparent 50%);
             pointer-events: none;
         }
 
         .feature-card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-4px);
+            border-color: rgba(74, 222, 128, 0.15);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(74, 222, 128, 0.05);
         }
 
         .feature-card:hover::before { opacity: 1; }
@@ -1028,6 +1085,59 @@
         }
 
         /* ================================================
+           STATS BAR
+           ================================================ */
+
+        .stats-bar {
+            padding: 64px 24px;
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-deep) 100%);
+        }
+
+        .stats-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item {
+            position: relative;
+        }
+
+        .stat-item::after {
+            content: '';
+            position: absolute;
+            right: -20px;
+            top: 10%;
+            height: 80%;
+            width: 1px;
+            background: var(--border);
+        }
+
+        .stat-item:last-child::after { display: none; }
+
+        .stat-number {
+            font-family: "Outfit", sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ================================================
            COMPARISON TABLE
            ================================================ */
 
@@ -1315,22 +1425,24 @@
 
         .final-cta {
             text-align: center;
-            padding: 100px 24px;
+            padding: 120px 24px;
             position: relative;
             overflow: hidden;
+            background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-primary) 100%);
         }
 
         .final-cta::before {
             content: '';
             position: absolute;
-            width: 700px;
-            height: 700px;
+            width: 900px;
+            height: 900px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(74, 222, 128, 0.06) 0%, transparent 65%);
+            background: radial-gradient(circle, rgba(74, 222, 128, 0.08) 0%, rgba(91, 156, 245, 0.03) 40%, transparent 65%);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             pointer-events: none;
+            animation: heroGlow 8s ease-in-out infinite alternate;
         }
 
         .final-cta .section-inner { position: relative; z-index: 1; }
@@ -1485,6 +1597,9 @@
             .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
 
             .trust-inner { gap: 24px; }
+
+            .stats-inner { grid-template-columns: 1fr; gap: 28px; }
+            .stat-item::after { display: none; }
         }
 
         @media (max-width: 900px) and (min-width: 769px) {
@@ -1509,8 +1624,8 @@
 
         .reveal {
             opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+            transform: translateY(32px);
+            transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
         }
 
         .reveal.visible {
@@ -1548,7 +1663,7 @@
                 <a href="#use-cases">Use Cases</a>
                 <a href="#pricing">Pricing</a>
                 <a href="#compare">Compare</a>
-                <a href="#download" class="nav-cta">Download Free</a>
+                <a href="#download" class="nav-cta">Get Started</a>
             </div>
             <button class="nav-hamburger" id="hamburger" aria-label="Menu">
                 <span></span><span></span><span></span>
@@ -1563,17 +1678,18 @@
         <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
         <a href="#compare" onclick="closeMobileMenu()">Compare</a>
         <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
-        <a href="#download" class="nav-cta" onclick="closeMobileMenu()">Download Free</a>
+        <a href="#download" class="nav-cta" onclick="closeMobileMenu()">Get Started</a>
     </div>
 
     <!-- ================================================
          HERO
          ================================================ -->
     <section class="hero">
+        <div class="hero-waveform" id="heroWave"></div>
         <div class="hero-inner">
             <div class="hero-badge">
                 <span class="hero-badge-dot"></span>
-                Free on macOS &amp; Windows
+                Available on macOS &amp; Windows
             </div>
             <h1>
                 <span class="gradient">Type 3x faster</span><br>with your voice
@@ -1592,7 +1708,7 @@
                 </a>
             </div>
             <p class="hero-meta">
-                No account needed. No credit card. 2,500 free words/week. &middot;
+                Try the free tier &middot; Pro from $10/mo &middot;
                 v<span id="version">0.7.8</span> &middot;
                 <a href="https://github.com/vasiels/voicebee-site/releases">Changelog</a>
             </p>
@@ -1674,6 +1790,26 @@
                     Listening...
                 </div>
                 <span>Whisper AI &middot; Local mode</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================
+         STATS
+         ================================================ -->
+    <div class="stats-bar">
+        <div class="stats-inner reveal">
+            <div class="stat-item">
+                <div class="stat-number" data-count="10">10+</div>
+                <div class="stat-label">Languages supported</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">&lt;100ms</div>
+                <div class="stat-label">Average latency</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">99.2%</div>
+                <div class="stat-label">Transcription accuracy</div>
             </div>
         </div>
     </div>
@@ -1828,15 +1964,15 @@
         <div class="section-inner">
             <div class="section-header reveal">
                 <div class="section-label">Pricing</div>
-                <h2 class="section-title">Free forever. Upgrade for unlimited.</h2>
-                <p class="section-desc">No credit card. No account needed. Download and start dictating in 30 seconds.</p>
+                <h2 class="section-title">Simple pricing. No surprises.</h2>
+                <p class="section-desc">Start with the free tier, or go Pro for unlimited dictation. Cancel anytime.</p>
             </div>
             <div class="pricing-grid">
                 <div class="pricing-card reveal">
-                    <div class="pricing-name">Free</div>
-                    <div class="pricing-desc">Everything you need to start dictating</div>
+                    <div class="pricing-name">Starter</div>
+                    <div class="pricing-desc">Try VoiceBee with limited usage</div>
                     <div class="pricing-price">$0 <span>/mo</span></div>
-                    <div class="pricing-period">Free forever. No strings.</div>
+                    <div class="pricing-period">2,500 words/week limit</div>
                     <ul class="pricing-features">
                         <li>2,500 words per week</li>
                         <li>Unlimited local Whisper STT</li>
@@ -1845,12 +1981,12 @@
                         <li>10+ languages with auto-detection</li>
                         <li>Works in every app</li>
                     </ul>
-                    <a href="#download" class="pricing-btn pricing-btn-outline">Download Free</a>
+                    <a href="#download" class="pricing-btn pricing-btn-outline">Get Started</a>
                 </div>
                 <div class="pricing-card featured reveal">
                     <div class="pricing-popular">Most Popular</div>
                     <div class="pricing-name">Pro</div>
-                    <div class="pricing-desc">Unlimited dictation. Zero limits. 33% less than Wispr Flow.</div>
+                    <div class="pricing-desc">Unlimited dictation. Zero limits.</div>
                     <div class="pricing-price">$10 <span>/mo</span></div>
                     <div class="pricing-period">or $96/yr (save 20%)</div>
                     <ul class="pricing-features">
@@ -1913,7 +2049,7 @@
                     <tbody>
                         <tr>
                             <td>Free tier</td>
-                            <td class="col-highlight"><strong>&#8734; local</strong><span class="tbl-note">2,500 w/wk cloud</span></td>
+                            <td class="col-highlight"><strong>2,500 w/wk</strong><span class="tbl-note">Starter plan</span></td>
                             <td>2,000 w/wk</td>
                             <td>2,000 w/wk</td>
                             <td>15 min total</td>
@@ -2060,9 +2196,9 @@
             </div>
             <div class="faq-list reveal">
                 <div class="faq-item">
-                    <button class="faq-question">Is VoiceBee really free?</button>
+                    <button class="faq-question">How much does VoiceBee cost?</button>
                     <div class="faq-answer">
-                        <div class="faq-answer-inner">Yes. The free plan includes 2,500 words per week with cloud processing, and unlimited words with local Whisper mode. No credit card, no account needed. Download and start dictating immediately.</div>
+                        <div class="faq-answer-inner">VoiceBee has a free Starter tier with 2,500 words per week. For unlimited dictation, the Pro plan is $10/mo (or $96/yr). No credit card needed to try the Starter plan.</div>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -2086,7 +2222,7 @@
                 <div class="faq-item">
                     <button class="faq-question">How is VoiceBee different from Wispr Flow?</button>
                     <div class="faq-answer">
-                        <div class="faq-answer-inner">VoiceBee offers local + cloud hybrid processing (Wispr is cloud-only), uses under 100MB RAM (Wispr uses ~800MB), costs $10/mo vs $15/mo, and offers a more generous free tier (2,500 vs 2,000 words/week). VoiceBee also works offline — Wispr doesn't.</div>
+                        <div class="faq-answer-inner">VoiceBee offers local + cloud hybrid processing (Wispr is cloud-only), uses under 100MB RAM (Wispr uses ~800MB), costs $10/mo vs $15/mo, and works offline — Wispr doesn't.</div>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -2112,7 +2248,7 @@
         <div class="section-inner reveal">
             <h2><span class="gradient">Stop typing.</span> Start talking.</h2>
             <p class="section-desc">
-                Download VoiceBee free. No account. No credit card. Just press a key and speak. Your words will do the rest.
+                Download VoiceBee. Press a key, speak, and your words appear instantly. Try the Starter plan or go Pro for unlimited.
             </p>
             <div class="final-cta-buttons">
                 <a href="https://github.com/vasiels/voicebee-site/releases/latest/download/VoiceBee.dmg" class="dl-btn dl-btn-mac">
@@ -2124,7 +2260,7 @@
                     Download for Windows
                 </a>
             </div>
-            <p class="final-cta-note">Free forever &middot; No account needed &middot; 2,500 words/week</p>
+            <p class="final-cta-note">Starter: $0/mo (2,500 words/week) &middot; Pro: $10/mo (unlimited)</p>
         </div>
     </section>
 
@@ -2174,6 +2310,24 @@
          SCRIPTS
          ================================================ -->
     <script>
+        // Generate hero waveform bars
+        (function() {
+            const wave = document.getElementById('heroWave');
+            if (wave) {
+                const barCount = 80;
+                for (let i = 0; i < barCount; i++) {
+                    const bar = document.createElement('div');
+                    bar.className = 'bar';
+                    const delay = (Math.sin(i * 0.3) * 0.5 + 0.5) * 2;
+                    const duration = 1 + Math.random() * 2;
+                    bar.style.animationDelay = delay + 's';
+                    bar.style.animationDuration = duration + 's';
+                    bar.style.opacity = 0.3 + Math.random() * 0.7;
+                    wave.appendChild(bar);
+                }
+            }
+        })();
+
         // Mobile menu
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
