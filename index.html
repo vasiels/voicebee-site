@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VoiceBee — Type 3x Faster With Your Voice</title>
+    <title>VoiceBee — Type 5x Faster With Your Voice</title>
     <meta name="description" content="The fastest way from brain to screen. Hold a key, speak, and your words appear instantly in any app. Local AI, cloud AI, or both. Mac & Windows. Plans from $10/mo.">
     <link rel="icon" type="image/png" sizes="96x96" href="voicebee-logo-1024.png">
     <link rel="apple-touch-icon" href="voicebee-logo-1024.png">
     <meta name="theme-color" content="#0a0a1a">
-    <meta property="og:title" content="VoiceBee — Type 3x Faster With Your Voice">
+    <meta property="og:title" content="VoiceBee — Type 5x Faster With Your Voice">
     <meta property="og:description" content="Hold a key, speak, and your words appear instantly in any app. Local AI, cloud AI, or both. Mac & Windows. Plans from $10/mo.">
     <meta property="og:image" content="https://voicebee.bytebee.gr/voicebee-logo-1024.png">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://voicebee.bytebee.gr">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="VoiceBee — Type 3x Faster With Your Voice">
+    <meta name="twitter:title" content="VoiceBee — Type 5x Faster With Your Voice">
     <meta name="twitter:description" content="Hold a key, speak, and your words appear instantly in any app. Local AI, cloud AI, or both. Mac & Windows. Plans from $10/mo.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -696,6 +696,248 @@
             background: var(--accent);
             animation: pulse-dot 1s infinite;
         }
+
+        /* ================================================
+           SPEED COMPARISON
+           ================================================ */
+
+        .speed-section {
+            padding: 100px 24px;
+            background: var(--bg-deep);
+            overflow: hidden;
+        }
+
+        .speed-inner { max-width: 1000px; margin: 0 auto; }
+
+        .speed-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 56px;
+        }
+
+        .speed-card {
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .speed-card-keyboard {
+            background: #1a1f2e;
+            border: 1px solid var(--border);
+        }
+
+        .speed-card-keyboard .speed-card-header { padding: 28px 28px 20px; }
+
+        .speed-card-keyboard .speed-card-label {
+            font-family: "DM Sans", sans-serif;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-tertiary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .speed-card-keyboard .speed-card-wpm {
+            font-family: "Outfit", sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            color: var(--text-secondary);
+            line-height: 1;
+        }
+
+        .speed-card-keyboard .speed-card-wpm span {
+            font-size: 1rem; font-weight: 500; color: var(--text-tertiary); margin-left: 4px;
+        }
+
+        .speed-card-keyboard .speed-card-body {
+            flex: 1; padding: 0 28px 28px; display: flex; flex-direction: column; justify-content: flex-end;
+        }
+
+        .keyboard-sim {
+            background: var(--bg-deep);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+            font-family: "DM Sans", sans-serif;
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            min-height: 140px;
+        }
+
+        .keyboard-sim .kb-cursor {
+            display: inline-block; width: 2px; height: 1.15em;
+            background: var(--text-tertiary); vertical-align: text-bottom;
+            animation: cursorBlink 1s step-end infinite; margin-left: 1px;
+        }
+
+        .speed-card-voicebee {
+            background: linear-gradient(135deg, #0d1a12 0%, #0f1729 100%);
+            border: 1px solid rgba(74, 222, 128, 0.15);
+            box-shadow: 0 0 80px rgba(74, 222, 128, 0.06);
+        }
+
+        .speed-card-voicebee .speed-card-header {
+            padding: 28px 28px 20px; display: flex; align-items: flex-start; justify-content: space-between;
+        }
+
+        .speed-card-voicebee .speed-card-label {
+            font-family: "DM Sans", sans-serif;
+            font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--accent); font-weight: 600; margin-bottom: 8px; opacity: 0.8;
+        }
+
+        .speed-card-voicebee .speed-card-wpm {
+            font-family: "Outfit", sans-serif;
+            font-size: 3rem; font-weight: 800; letter-spacing: -0.04em;
+            color: var(--accent); line-height: 1;
+        }
+
+        .speed-card-voicebee .speed-card-wpm span {
+            font-size: 1rem; font-weight: 500; color: rgba(74, 222, 128, 0.5); margin-left: 4px;
+        }
+
+        .speed-card-badge {
+            display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px;
+            border-radius: 100px; background: rgba(74, 222, 128, 0.1);
+            border: 1px solid rgba(74, 222, 128, 0.15);
+            font-size: 0.68rem; font-weight: 600; color: var(--accent);
+        }
+
+        .speed-card-badge .dot {
+            width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        .speed-card-voicebee .speed-card-body {
+            flex: 1; padding: 0 28px 28px; display: flex; flex-direction: column; justify-content: flex-end;
+        }
+
+        .voicebee-sim {
+            background: rgba(74, 222, 128, 0.04);
+            border: 1px solid rgba(74, 222, 128, 0.08);
+            border-radius: 14px; padding: 20px;
+            font-family: "DM Sans", sans-serif; font-size: 0.92rem;
+            color: var(--text-primary); line-height: 1.7; min-height: 140px;
+        }
+
+        .voicebee-sim .vb-cursor {
+            display: inline-block; width: 2px; height: 1.15em;
+            background: var(--accent); vertical-align: text-bottom;
+            animation: cursorBlink 0.8s step-end infinite; margin-left: 1px;
+        }
+
+        .speed-waveform {
+            display: flex; align-items: center; justify-content: center;
+            gap: 2px; height: 32px; margin-top: 16px;
+        }
+
+        .speed-waveform .bar {
+            width: 3px; border-radius: 2px; background: var(--accent);
+            animation: speedWave 0.8s ease-in-out infinite alternate;
+        }
+
+        @keyframes speedWave {
+            from { height: 15%; opacity: 0.3; }
+            to { height: 100%; opacity: 0.8; }
+        }
+
+        .speed-multiplier { text-align: center; margin-top: 32px; }
+
+        .speed-multiplier-badge {
+            display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px;
+            background: var(--accent-muted); border: 1px solid rgba(74, 222, 128, 0.12);
+            border-radius: 100px; font-family: "Outfit", sans-serif;
+            font-size: 1rem; font-weight: 700; color: var(--accent);
+        }
+
+        .speed-multiplier-badge svg { width: 18px; height: 18px; }
+
+        /* ================================================
+           OVERLAY WIDGET SHOWCASE
+           ================================================ */
+
+        .demo-widget-grid {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 40px;
+        }
+
+        .overlay-widget { width: 120px; height: 120px; position: relative; flex-shrink: 0; }
+
+        .overlay-circle {
+            width: 120px; height: 120px; border-radius: 50%;
+            background: rgba(20, 20, 30, 0.75);
+            border: 2.5px solid rgba(255, 255, 255, 0.1);
+            position: relative; display: flex; align-items: center; justify-content: center;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .overlay-dot {
+            width: 12px; height: 12px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3); transition: opacity 0.3s;
+        }
+
+        .overlay-canvas { position: absolute; inset: 0; width: 120px; height: 120px; }
+
+        .overlay-spinner {
+            width: 44px; height: 44px; border-radius: 50%;
+            border: 3px solid rgba(251, 191, 36, 0.2); border-top-color: #fbbf24;
+            animation: overlay-spin 0.8s linear infinite;
+            position: absolute; opacity: 0; transition: opacity 0.3s;
+        }
+
+        @keyframes overlay-spin { to { transform: rotate(360deg); } }
+
+        .overlay-check {
+            position: absolute; opacity: 0; transform: scale(0.5);
+        }
+
+        .overlay-check svg { width: 44px; height: 44px; }
+
+        @keyframes overlay-check-pop {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .widget-states { display: flex; flex-direction: column; }
+
+        .widget-state-item {
+            display: flex; align-items: center; gap: 16px;
+            padding: 14px 20px; border-radius: 12px;
+            transition: all 0.3s var(--ease-out); cursor: default;
+        }
+
+        .widget-state-item.active { background: var(--bg-glass-hover); }
+
+        .widget-state-dot {
+            width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; transition: all 0.3s;
+        }
+
+        .widget-state-dot.green { background: #4ade80; }
+        .widget-state-dot.amber { background: #fbbf24; }
+        .widget-state-dot.idle-dot { background: rgba(255, 255, 255, 0.3); }
+
+        .widget-state-name {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); transition: color 0.3s;
+        }
+
+        .widget-state-item.active .widget-state-name { color: var(--text-primary); }
+
+        .widget-state-desc {
+            font-size: 0.78rem; color: var(--text-tertiary); margin-left: auto; transition: color 0.3s;
+        }
+
+        .widget-state-item.active .widget-state-desc { color: var(--text-secondary); }
 
         /* ================================================
            SECTION SHARED
@@ -1602,6 +1844,10 @@
 
             .stats-inner { grid-template-columns: 1fr; gap: 28px; }
             .stat-item::after { display: none; }
+
+            .speed-grid { grid-template-columns: 1fr; }
+            .speed-card { min-height: 320px; }
+            .demo-widget-grid { flex-direction: column; gap: 40px; }
         }
 
         @media (max-width: 900px) and (min-width: 769px) {
@@ -1688,7 +1934,7 @@
                 Available on macOS &amp; Windows
             </div>
             <h1>
-                <span class="gradient">Type 3x faster</span><br>with your voice
+                <span class="gradient">Type 5x faster</span><br>with your voice
             </h1>
             <p class="hero-sub">
                 Your keyboard is slowing you down. Hold a key, speak naturally, and watch your words appear instantly — in any app. No menus. No windows. Just your voice.
@@ -1766,26 +2012,116 @@
     </div>
 
     <!-- ================================================
-         LIVE DEMO
+         LIVE DEMO + OVERLAY WIDGET
          ================================================ -->
     <div class="demo-section">
-        <div class="demo-window reveal">
-            <div class="demo-titlebar">
-                <span class="demo-dot red"></span>
-                <span class="demo-dot yellow"></span>
-                <span class="demo-dot green"></span>
-                <span class="demo-titlebar-text">Gmail — New Message</span>
-            </div>
-            <div class="demo-body">
-                <div class="demo-label">VoiceBee is typing...</div>
-                <div class="demo-text" id="demoText"><span class="demo-cursor"></span></div>
-            </div>
-            <div class="demo-status">
-                <div class="demo-status-recording">
-                    <span class="dot"></span>
-                    Listening...
+        <div class="demo-widget-grid reveal">
+            <div class="demo-window">
+                <div class="demo-titlebar">
+                    <span class="demo-dot red"></span>
+                    <span class="demo-dot yellow"></span>
+                    <span class="demo-dot green"></span>
+                    <span class="demo-titlebar-text">Gmail — New Message</span>
                 </div>
-                <span>Whisper AI &middot; Local mode</span>
+                <div class="demo-body">
+                    <div class="demo-label">VoiceBee is typing...</div>
+                    <div class="demo-text" id="demoText"><span class="demo-cursor"></span></div>
+                </div>
+                <div class="demo-status">
+                    <div class="demo-status-recording">
+                        <span class="dot"></span>
+                        Listening...
+                    </div>
+                    <span>Whisper AI &middot; Local mode</span>
+                </div>
+            </div>
+            <div>
+                <div class="overlay-widget" id="overlayWidget">
+                    <div class="overlay-circle" id="overlayCircle">
+                        <canvas class="overlay-canvas" id="overlayCanvas" width="120" height="120"></canvas>
+                        <div class="overlay-dot" id="overlayDot"></div>
+                        <div class="overlay-spinner" id="overlaySpinner"></div>
+                        <div class="overlay-check" id="overlayCheck">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-states" id="widgetStates">
+                    <div class="widget-state-item active" data-state="idle">
+                        <div class="widget-state-dot idle-dot"></div>
+                        <span class="widget-state-name">idle</span>
+                        <span class="widget-state-desc">Ready</span>
+                    </div>
+                    <div class="widget-state-item" data-state="recording">
+                        <div class="widget-state-dot green"></div>
+                        <span class="widget-state-name">recording</span>
+                        <span class="widget-state-desc">Listening</span>
+                    </div>
+                    <div class="widget-state-item" data-state="transcribing">
+                        <div class="widget-state-dot amber"></div>
+                        <span class="widget-state-name">transcribing</span>
+                        <span class="widget-state-desc">Processing</span>
+                    </div>
+                    <div class="widget-state-item" data-state="done">
+                        <div class="widget-state-dot green"></div>
+                        <span class="widget-state-name">done</span>
+                        <span class="widget-state-desc">Inserted</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================
+         SPEED COMPARISON
+         ================================================ -->
+    <div class="speed-section">
+        <div class="speed-inner">
+            <div class="section-header reveal">
+                <div class="section-label">Speed</div>
+                <h2 class="section-title">Your keyboard can't keep up</h2>
+                <p class="section-desc">Average typing speed vs VoiceBee dictation. Same text, real results.</p>
+            </div>
+            <div class="speed-grid">
+                <div class="speed-card speed-card-keyboard reveal reveal-d1">
+                    <div class="speed-card-header">
+                        <div class="speed-card-label">Keyboard</div>
+                        <div class="speed-card-wpm">45 <span>wpm</span></div>
+                    </div>
+                    <div class="speed-card-body">
+                        <div class="keyboard-sim">
+                            <span id="kbText"></span><span class="kb-cursor"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="speed-card speed-card-voicebee reveal reveal-d2">
+                    <div class="speed-card-header">
+                        <div>
+                            <div class="speed-card-label">VoiceBee</div>
+                            <div class="speed-card-wpm">220 <span>wpm</span></div>
+                        </div>
+                        <div class="speed-card-badge">
+                            <span class="dot"></span>
+                            Listening
+                        </div>
+                    </div>
+                    <div class="speed-card-body">
+                        <div class="voicebee-sim">
+                            <span id="vbText"></span><span class="vb-cursor"></span>
+                        </div>
+                        <div class="speed-waveform" id="speedWave"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="speed-multiplier reveal">
+                <div class="speed-multiplier-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                    </svg>
+                    5x faster than typing
+                </div>
             </div>
         </div>
     </div>
@@ -1880,7 +2216,7 @@
                     <div class="usecase-icon">&#9997;&#65039;</div>
                     <div>
                         <h3>Writers &amp; Content Creators</h3>
-                        <p>Draft blog posts, emails, and social content 3x faster. Think out loud and let VoiceBee capture every word as you speak.</p>
+                        <p>Draft blog posts, emails, and social content 5x faster. Think out loud and let VoiceBee capture every word as you speak.</p>
                     </div>
                 </div>
                 <div class="usecase-card reveal reveal-d2">
@@ -2408,6 +2744,160 @@
 
         const demoWindow = document.querySelector('.demo-window');
         if (demoWindow) demoObserver.observe(demoWindow);
+
+        // Speed comparison animation
+        (function() {
+            const speedWave = document.getElementById('speedWave');
+            if (speedWave) {
+                for (let i = 0; i < 40; i++) {
+                    const bar = document.createElement('div');
+                    bar.className = 'bar';
+                    bar.style.animationDelay = (i * 0.05) + 's';
+                    bar.style.animationDuration = (0.4 + Math.random() * 0.6) + 's';
+                    speedWave.appendChild(bar);
+                }
+            }
+
+            const speedText = "Hi Sarah, thanks for sending over the Q3 report. I've reviewed the numbers and everything looks great. Let's schedule a call this Thursday to discuss the next steps and plan our strategy for Q4.";
+            const kbEl = document.getElementById('kbText');
+            const vbEl = document.getElementById('vbText');
+            let kbIdx = 0, vbIdx = 0, speedRunning = false;
+
+            function runSpeedComparison() {
+                if (speedRunning) return;
+                speedRunning = true;
+                kbIdx = 0; vbIdx = 0;
+                if (kbEl) kbEl.textContent = '';
+                if (vbEl) vbEl.textContent = '';
+
+                function typeKb() {
+                    if (kbIdx < speedText.length) {
+                        kbEl.textContent = speedText.substring(0, kbIdx + 1);
+                        kbIdx++;
+                        setTimeout(typeKb, 180 + Math.random() * 160);
+                    }
+                }
+
+                function typeVb() {
+                    if (vbIdx < speedText.length) {
+                        vbEl.textContent = speedText.substring(0, vbIdx + 1);
+                        vbIdx++;
+                        setTimeout(typeVb, 20 + Math.random() * 30);
+                    } else {
+                        setTimeout(() => { speedRunning = false; setTimeout(runSpeedComparison, 3000); }, 2000);
+                    }
+                }
+
+                typeKb(); typeVb();
+            }
+
+            const speedObserver = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) { setTimeout(runSpeedComparison, 500); speedObserver.disconnect(); }
+            }, { threshold: 0.3 });
+
+            const speedSection = document.querySelector('.speed-section');
+            if (speedSection) speedObserver.observe(speedSection);
+        })();
+
+        // Overlay widget lifecycle animation
+        (function() {
+            const circle = document.getElementById('overlayCircle');
+            const canvas = document.getElementById('overlayCanvas');
+            const dot = document.getElementById('overlayDot');
+            const spinner = document.getElementById('overlaySpinner');
+            const check = document.getElementById('overlayCheck');
+            const stateItems = document.querySelectorAll('.widget-state-item');
+            if (!circle || !canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            const W = 120, H = 120, CX = W/2, CY = H/2, BASE_R = 36, MAX_AMP = 24, SAMPLES = 32;
+            let waveHistory = new Array(SAMPLES).fill(0);
+            let currentState = 'idle', animFrame = null;
+
+            function setActiveState(state) {
+                stateItems.forEach(item => item.classList.toggle('active', item.dataset.state === state));
+            }
+
+            function setState(state) {
+                currentState = state;
+                setActiveState(state);
+                dot.style.opacity = '0';
+                spinner.style.opacity = '0';
+                check.style.opacity = '0';
+                check.style.transform = 'scale(0.5)';
+                ctx.clearRect(0, 0, W, H);
+
+                if (state === 'idle') {
+                    circle.style.borderColor = 'rgba(255,255,255,0.1)';
+                    circle.style.boxShadow = 'none';
+                    dot.style.opacity = '1';
+                    waveHistory.fill(0);
+                } else if (state === 'recording') {
+                    circle.style.borderColor = '#4ade80';
+                    circle.style.boxShadow = '0 0 20px rgba(74,222,128,0.4)';
+                    startWaveform();
+                } else if (state === 'transcribing') {
+                    circle.style.borderColor = '#fbbf24';
+                    circle.style.boxShadow = '0 0 16px rgba(251,191,36,0.3)';
+                    waveHistory.fill(0);
+                    spinner.style.opacity = '1';
+                } else if (state === 'done') {
+                    circle.style.borderColor = '#4ade80';
+                    circle.style.boxShadow = '0 0 24px rgba(74,222,128,0.5)';
+                    check.style.opacity = '1';
+                    check.style.transform = 'scale(1)';
+                    check.style.animation = 'overlay-check-pop 0.3s ease-out';
+                }
+            }
+
+            function startWaveform() {
+                if (animFrame) cancelAnimationFrame(animFrame);
+                function drawWave() {
+                    if (currentState !== 'recording') return;
+                    waveHistory.shift();
+                    waveHistory.push(0.2 + Math.random() * 0.8);
+                    ctx.clearRect(0, 0, W, H);
+                    ctx.beginPath();
+                    for (let i = 0; i <= SAMPLES; i++) {
+                        const angle = (i / SAMPLES) * Math.PI * 2 - Math.PI / 2;
+                        const r = BASE_R + waveHistory[i % SAMPLES] * MAX_AMP;
+                        const x = CX + Math.cos(angle) * r;
+                        const y = CY + Math.sin(angle) * r;
+                        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                    }
+                    ctx.closePath();
+                    ctx.strokeStyle = 'rgba(74,222,128,0.8)';
+                    ctx.lineWidth = 2.5;
+                    ctx.stroke();
+                    animFrame = requestAnimationFrame(drawWave);
+                }
+                drawWave();
+            }
+
+            let widgetRunning = false;
+            function runLifecycle() {
+                if (widgetRunning) return;
+                widgetRunning = true;
+                setState('idle');
+                setTimeout(() => {
+                    setState('recording');
+                    setTimeout(() => {
+                        setState('transcribing');
+                        setTimeout(() => {
+                            setState('done');
+                            setTimeout(() => { setState('idle'); widgetRunning = false; setTimeout(runLifecycle, 2000); }, 1500);
+                        }, 1500);
+                    }, 3000);
+                }, 1500);
+            }
+
+            const widgetObserver = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) { setTimeout(runLifecycle, 500); widgetObserver.disconnect(); }
+            }, { threshold: 0.3 });
+
+            const widgetSection = document.querySelector('.demo-section');
+            if (widgetSection) widgetObserver.observe(widgetSection);
+        })();
     </script>
 </body>
 </html>
