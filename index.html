@@ -2194,7 +2194,7 @@
     <div class="stats-bar">
         <div class="stats-inner reveal">
             <div class="stat-item">
-                <div class="stat-number" data-count="50">50+</div>
+                <div class="stat-number" data-count="99">99+</div>
                 <div class="stat-label">Languages supported</div>
             </div>
             <div class="stat-item">
@@ -2241,7 +2241,7 @@
                 </div>
                 <div class="feature-card reveal reveal-d5">
                     <div class="feature-icon fi-blue">&#128488;</div>
-                    <h3>50+ Languages</h3>
+                    <h3>99+ Languages</h3>
                     <p>English, Greek, Spanish, German, French, Japanese, Chinese, and more — with automatic language detection.</p>
                 </div>
                 <div class="feature-card reveal reveal-d6">
@@ -2372,7 +2372,7 @@
                         <li>Unlimited local Whisper STT</li>
                         <li>Cloud STT (within word limit)</li>
                         <li>Full history &amp; export</li>
-                        <li>50+ languages with auto-detection</li>
+                        <li>99+ languages with auto-detection</li>
                         <li>Works in every app</li>
                     </ul>
                     <a href="#download" class="pricing-btn pricing-btn-outline">Get Started</a>
@@ -2610,7 +2610,7 @@
                 <div class="faq-item">
                     <button class="faq-question">What languages are supported?</button>
                     <div class="faq-answer">
-                        <div class="faq-answer-inner">VoiceBee supports 50+ languages including English, Greek, Spanish, French, German, Italian, Portuguese, Japanese, Chinese, Korean, and more. Language detection is automatic — just start speaking.</div>
+                        <div class="faq-answer-inner">VoiceBee supports 99+ languages including English, Greek, Spanish, French, German, Italian, Portuguese, Japanese, Chinese, Korean, and more. Language detection is automatic — just start speaking.</div>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -2923,6 +2923,7 @@
             const kbEl = document.getElementById('kbText');
             const vbEl = document.getElementById('vbText');
             let speedRunning = false;
+            let cycleId = 0;
 
             // Mini overlay state
             let miniState = 'idle', miniFrame = null;
@@ -2984,8 +2985,9 @@
             }
 
             function runSpeedComparison() {
-                if (speedRunning) return;
                 speedRunning = true;
+                cycleId++;
+                const thisCycle = cycleId;
                 let kbIdx = 0, vbIdx = 0;
                 if (kbEl) kbEl.textContent = '';
                 if (vbEl) vbEl.textContent = '';
@@ -2994,6 +2996,7 @@
                 setMiniState('recording');
 
                 function typeKb() {
+                    if (thisCycle !== cycleId) return;
                     if (kbIdx < speedText.length) {
                         kbEl.textContent = speedText.substring(0, kbIdx + 1);
                         kbIdx++;
@@ -3002,16 +3005,19 @@
                 }
 
                 function typeVb() {
+                    if (thisCycle !== cycleId) return;
                     if (vbIdx < speedText.length) {
                         vbEl.textContent = speedText.substring(0, vbIdx + 1);
                         vbIdx++;
                         setTimeout(typeVb, 20 + Math.random() * 30);
                     } else {
-                        // VB done → transcribing → done → idle
+                        // VB done → transcribing → done → idle → restart
                         setMiniState('transcribing');
                         setTimeout(() => {
+                            if (thisCycle !== cycleId) return;
                             setMiniState('done');
                             setTimeout(() => {
+                                if (thisCycle !== cycleId) return;
                                 setMiniState('idle');
                                 speedRunning = false;
                                 setTimeout(runSpeedComparison, 3000);
