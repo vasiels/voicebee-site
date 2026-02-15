@@ -833,19 +833,29 @@
             animation: cursorBlink 0.8s step-end infinite; margin-left: 1px;
         }
 
-        .speed-waveform {
+        .speed-widget {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .speed-widget .mini-overlay {
+            width: 56px; height: 56px; border-radius: 50%;
+            background: rgba(20, 20, 30, 0.75);
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 16px rgba(74, 222, 128, 0.3);
             display: flex; align-items: center; justify-content: center;
-            gap: 2px; height: 32px; margin-top: 16px;
+            animation: indicatorPulse 2s ease-in-out infinite;
         }
 
-        .speed-waveform .bar {
-            width: 3px; border-radius: 2px; background: var(--accent);
-            animation: speedWave 0.8s ease-in-out infinite alternate;
+        .speed-widget .mini-overlay svg {
+            width: 22px; height: 22px;
         }
 
-        @keyframes speedWave {
-            from { height: 15%; opacity: 0.3; }
-            to { height: 100%; opacity: 0.8; }
+        @keyframes indicatorPulse {
+            0%, 100% { box-shadow: 0 0 16px rgba(74, 222, 128, 0.3); }
+            50% { box-shadow: 0 0 28px rgba(74, 222, 128, 0.5); }
         }
 
         .speed-multiplier { text-align: center; margin-top: 32px; }
@@ -868,7 +878,22 @@
             align-items: center;
             justify-content: center;
             gap: 60px;
-            margin-top: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .demo-widget-grid .demo-window {
+            margin: 0;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .demo-widget-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            flex-shrink: 0;
         }
 
         .overlay-widget { width: 120px; height: 120px; position: relative; flex-shrink: 0; }
@@ -1847,7 +1872,8 @@
 
             .speed-grid { grid-template-columns: 1fr; }
             .speed-card { min-height: 320px; }
-            .demo-widget-grid { flex-direction: column; gap: 40px; }
+            .demo-widget-grid { flex-direction: column; gap: 32px; }
+            .demo-widget-right { width: 100%; align-items: center; }
         }
 
         @media (max-width: 900px) and (min-width: 769px) {
@@ -2035,7 +2061,7 @@
                     <span>Whisper AI &middot; Local mode</span>
                 </div>
             </div>
-            <div>
+            <div class="demo-widget-right">
                 <div class="overlay-widget" id="overlayWidget">
                     <div class="overlay-circle" id="overlayCircle">
                         <canvas class="overlay-canvas" id="overlayCanvas" width="120" height="120"></canvas>
@@ -2111,7 +2137,15 @@
                         <div class="voicebee-sim">
                             <span id="vbText"></span><span class="vb-cursor"></span>
                         </div>
-                        <div class="speed-waveform" id="speedWave"></div>
+                        <div class="speed-widget">
+                            <div class="mini-overlay">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round">
+                                    <rect x="9" y="2" width="6" height="12" rx="3"/>
+                                    <path d="M19 10v1a7 7 0 0 1-14 0v-1"/>
+                                    <line x1="12" y1="19" x2="12" y2="22"/>
+                                </svg>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2747,17 +2781,6 @@
 
         // Speed comparison animation
         (function() {
-            const speedWave = document.getElementById('speedWave');
-            if (speedWave) {
-                for (let i = 0; i < 40; i++) {
-                    const bar = document.createElement('div');
-                    bar.className = 'bar';
-                    bar.style.animationDelay = (i * 0.05) + 's';
-                    bar.style.animationDuration = (0.4 + Math.random() * 0.6) + 's';
-                    speedWave.appendChild(bar);
-                }
-            }
-
             const speedText = "Hi Sarah, thanks for sending over the Q3 report. I've reviewed the numbers and everything looks great. Let's schedule a call this Thursday to discuss the next steps and plan our strategy for Q4.";
             const kbEl = document.getElementById('kbText');
             const vbEl = document.getElementById('vbText');
