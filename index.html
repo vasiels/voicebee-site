@@ -840,23 +840,39 @@
             margin-top: 20px;
         }
 
-        .speed-widget .mini-overlay {
-            width: 56px; height: 56px; border-radius: 50%;
+        .mini-overlay-widget { width: 64px; height: 64px; position: relative; flex-shrink: 0; }
+
+        .mini-overlay-circle {
+            width: 64px; height: 64px; border-radius: 50%;
             background: rgba(20, 20, 30, 0.75);
             border: 2px solid var(--accent);
             box-shadow: 0 0 16px rgba(74, 222, 128, 0.3);
             display: flex; align-items: center; justify-content: center;
-            animation: indicatorPulse 2s ease-in-out infinite;
+            position: relative;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
-        .speed-widget .mini-overlay svg {
-            width: 22px; height: 22px;
+        .mini-overlay-circle canvas {
+            position: absolute; inset: 0; width: 64px; height: 64px;
         }
 
-        @keyframes indicatorPulse {
-            0%, 100% { box-shadow: 0 0 16px rgba(74, 222, 128, 0.3); }
-            50% { box-shadow: 0 0 28px rgba(74, 222, 128, 0.5); }
+        .mini-overlay-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3); transition: opacity 0.3s;
         }
+
+        .mini-overlay-spinner {
+            width: 24px; height: 24px; border-radius: 50%;
+            border: 2px solid rgba(251, 191, 36, 0.2); border-top-color: #fbbf24;
+            animation: overlay-spin 0.8s linear infinite;
+            position: absolute; opacity: 0; transition: opacity 0.3s;
+        }
+
+        .mini-overlay-check {
+            position: absolute; opacity: 0; transform: scale(0.5);
+        }
+
+        .mini-overlay-check svg { width: 24px; height: 24px; }
 
         .speed-multiplier { text-align: center; margin-top: 32px; }
 
@@ -2138,12 +2154,17 @@
                             <span id="vbText"></span><span class="vb-cursor"></span>
                         </div>
                         <div class="speed-widget">
-                            <div class="mini-overlay">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round">
-                                    <rect x="9" y="2" width="6" height="12" rx="3"/>
-                                    <path d="M19 10v1a7 7 0 0 1-14 0v-1"/>
-                                    <line x1="12" y1="19" x2="12" y2="22"/>
-                                </svg>
+                            <div class="mini-overlay-widget">
+                                <div class="mini-overlay-circle" id="miniOverlayCircle">
+                                    <canvas id="miniOverlayCanvas" width="64" height="64"></canvas>
+                                    <div class="mini-overlay-dot" id="miniOverlayDot"></div>
+                                    <div class="mini-overlay-spinner" id="miniOverlaySpinner"></div>
+                                    <div class="mini-overlay-check" id="miniOverlayCheck">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"/>
+                                        </svg>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2740,108 +2761,37 @@
             });
         });
 
-        // Typing demo animation
-        const demoSentences = [
-            "Hi Sarah, thanks for sending over the Q3 report. I've reviewed the numbers and everything looks great. Let's schedule a call this Thursday to discuss next steps.",
-            "The new feature implementation is ready for code review. I've added unit tests and updated the documentation. Please take a look when you get a chance.",
-            "Dear team, just a quick update on the project timeline. We're on track to deliver the MVP by end of March. I'll share the detailed roadmap in tomorrow's standup."
-        ];
-
-        let sentenceIndex = 0;
-        let charIndex = 0;
-        const demoText = document.getElementById('demoText');
-
-        function typeNextChar() {
-            const sentence = demoSentences[sentenceIndex];
-            if (charIndex < sentence.length) {
-                demoText.innerHTML = sentence.substring(0, charIndex + 1) + '<span class="demo-cursor"></span>';
-                charIndex++;
-                const delay = 15 + Math.random() * 25;
-                setTimeout(typeNextChar, delay);
-            } else {
-                setTimeout(() => {
-                    charIndex = 0;
-                    sentenceIndex = (sentenceIndex + 1) % demoSentences.length;
-                    demoText.innerHTML = '<span class="demo-cursor"></span>';
-                    setTimeout(typeNextChar, 600);
-                }, 3000);
-            }
-        }
-
-        // Start typing when demo is visible
-        const demoObserver = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-                setTimeout(typeNextChar, 800);
-                demoObserver.disconnect();
-            }
-        }, { threshold: 0.3 });
-
-        const demoWindow = document.querySelector('.demo-window');
-        if (demoWindow) demoObserver.observe(demoWindow);
-
-        // Speed comparison animation
+        // ========== SYNCED DEMO + OVERLAY WIDGET ==========
         (function() {
-            const speedText = "Hi Sarah, thanks for sending over the Q3 report. I've reviewed the numbers and everything looks great. Let's schedule a call this Thursday to discuss the next steps and plan our strategy for Q4.";
-            const kbEl = document.getElementById('kbText');
-            const vbEl = document.getElementById('vbText');
-            let kbIdx = 0, vbIdx = 0, speedRunning = false;
+            const demoText = document.getElementById('demoText');
+            const demoStatus = document.querySelector('.demo-status-recording');
 
-            function runSpeedComparison() {
-                if (speedRunning) return;
-                speedRunning = true;
-                kbIdx = 0; vbIdx = 0;
-                if (kbEl) kbEl.textContent = '';
-                if (vbEl) vbEl.textContent = '';
-
-                function typeKb() {
-                    if (kbIdx < speedText.length) {
-                        kbEl.textContent = speedText.substring(0, kbIdx + 1);
-                        kbIdx++;
-                        setTimeout(typeKb, 180 + Math.random() * 160);
-                    }
-                }
-
-                function typeVb() {
-                    if (vbIdx < speedText.length) {
-                        vbEl.textContent = speedText.substring(0, vbIdx + 1);
-                        vbIdx++;
-                        setTimeout(typeVb, 20 + Math.random() * 30);
-                    } else {
-                        setTimeout(() => { speedRunning = false; setTimeout(runSpeedComparison, 3000); }, 2000);
-                    }
-                }
-
-                typeKb(); typeVb();
-            }
-
-            const speedObserver = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting) { setTimeout(runSpeedComparison, 500); speedObserver.disconnect(); }
-            }, { threshold: 0.3 });
-
-            const speedSection = document.querySelector('.speed-section');
-            if (speedSection) speedObserver.observe(speedSection);
-        })();
-
-        // Overlay widget lifecycle animation
-        (function() {
+            // Overlay widget elements
             const circle = document.getElementById('overlayCircle');
             const canvas = document.getElementById('overlayCanvas');
             const dot = document.getElementById('overlayDot');
             const spinner = document.getElementById('overlaySpinner');
             const check = document.getElementById('overlayCheck');
             const stateItems = document.querySelectorAll('.widget-state-item');
-            if (!circle || !canvas) return;
+            if (!circle || !canvas || !demoText) return;
 
             const ctx = canvas.getContext('2d');
             const W = 120, H = 120, CX = W/2, CY = H/2, BASE_R = 36, MAX_AMP = 24, SAMPLES = 32;
             let waveHistory = new Array(SAMPLES).fill(0);
             let currentState = 'idle', animFrame = null;
 
+            const sentences = [
+                "Hi Sarah, thanks for sending over the Q3 report. I've reviewed the numbers and everything looks great. Let's schedule a call this Thursday to discuss next steps.",
+                "The new feature implementation is ready for code review. I've added unit tests and updated the documentation. Please take a look when you get a chance.",
+                "Dear team, just a quick update on the project timeline. We're on track to deliver the MVP by end of March. I'll share the detailed roadmap in tomorrow's standup."
+            ];
+            let sentenceIdx = 0;
+
             function setActiveState(state) {
                 stateItems.forEach(item => item.classList.toggle('active', item.dataset.state === state));
             }
 
-            function setState(state) {
+            function setWidgetState(state) {
                 currentState = state;
                 setActiveState(state);
                 dot.style.opacity = '0';
@@ -2897,29 +2847,181 @@
                 drawWave();
             }
 
-            let widgetRunning = false;
-            function runLifecycle() {
-                if (widgetRunning) return;
-                widgetRunning = true;
-                setState('idle');
+            // Synced lifecycle: idle → recording (typing) → transcribing → done → idle
+            let running = false;
+
+            function runCycle() {
+                if (running) return;
+                running = true;
+                const sentence = sentences[sentenceIdx];
+                sentenceIdx = (sentenceIdx + 1) % sentences.length;
+                let charIdx = 0;
+
+                // IDLE
+                setWidgetState('idle');
+                demoText.innerHTML = '<span class="demo-cursor"></span>';
+                if (demoStatus) demoStatus.innerHTML = '<span class="dot"></span> Ready';
+
                 setTimeout(() => {
-                    setState('recording');
-                    setTimeout(() => {
-                        setState('transcribing');
-                        setTimeout(() => {
-                            setState('done');
-                            setTimeout(() => { setState('idle'); widgetRunning = false; setTimeout(runLifecycle, 2000); }, 1500);
-                        }, 1500);
-                    }, 3000);
+                    // RECORDING — start typing
+                    setWidgetState('recording');
+                    if (demoStatus) demoStatus.innerHTML = '<span class="dot"></span> Listening...';
+
+                    function typeChar() {
+                        if (charIdx < sentence.length) {
+                            demoText.innerHTML = sentence.substring(0, charIdx + 1) + '<span class="demo-cursor"></span>';
+                            charIdx++;
+                            setTimeout(typeChar, 15 + Math.random() * 25);
+                        } else {
+                            // TRANSCRIBING
+                            setWidgetState('transcribing');
+                            if (demoStatus) demoStatus.innerHTML = '<span class="dot"></span> Processing...';
+
+                            setTimeout(() => {
+                                // DONE
+                                setWidgetState('done');
+                                if (demoStatus) demoStatus.innerHTML = '<span class="dot"></span> Done!';
+
+                                setTimeout(() => {
+                                    // Back to IDLE
+                                    setWidgetState('idle');
+                                    if (demoStatus) demoStatus.innerHTML = '<span class="dot"></span> Ready';
+                                    running = false;
+                                    setTimeout(runCycle, 2000);
+                                }, 1500);
+                            }, 1200);
+                        }
+                    }
+                    typeChar();
                 }, 1500);
             }
 
-            const widgetObserver = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting) { setTimeout(runLifecycle, 500); widgetObserver.disconnect(); }
+            const demoObserver = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) { setTimeout(runCycle, 500); demoObserver.disconnect(); }
             }, { threshold: 0.3 });
 
-            const widgetSection = document.querySelector('.demo-section');
-            if (widgetSection) widgetObserver.observe(widgetSection);
+            const demoSection = document.querySelector('.demo-section');
+            if (demoSection) demoObserver.observe(demoSection);
+        })();
+
+        // ========== SPEED COMPARISON + MINI OVERLAY ==========
+        (function() {
+            const miniCircle = document.getElementById('miniOverlayCircle');
+            const miniCanvas = document.getElementById('miniOverlayCanvas');
+            const miniDot = document.getElementById('miniOverlayDot');
+            const miniSpinner = document.getElementById('miniOverlaySpinner');
+            const miniCheck = document.getElementById('miniOverlayCheck');
+
+            const speedText = "Hi Sarah, thanks for sending over the Q3 report. I've reviewed the numbers and everything looks great. Let's schedule a call this Thursday to discuss the next steps and plan our strategy for Q4.";
+            const kbEl = document.getElementById('kbText');
+            const vbEl = document.getElementById('vbText');
+            let speedRunning = false;
+
+            // Mini overlay state
+            let miniState = 'idle', miniFrame = null;
+            const mCtx = miniCanvas ? miniCanvas.getContext('2d') : null;
+            const MW = 64, MH = 64, MCX = MW/2, MCY = MH/2, MBR = 18, MMA = 12, MSA = 24;
+            let miniWave = new Array(MSA).fill(0);
+
+            function setMiniState(state) {
+                if (!miniCircle) return;
+                miniState = state;
+                miniDot.style.opacity = '0';
+                miniSpinner.style.opacity = '0';
+                miniCheck.style.opacity = '0';
+                miniCheck.style.transform = 'scale(0.5)';
+                if (mCtx) mCtx.clearRect(0, 0, MW, MH);
+
+                if (state === 'idle') {
+                    miniCircle.style.borderColor = 'rgba(255,255,255,0.1)';
+                    miniCircle.style.boxShadow = 'none';
+                    miniDot.style.opacity = '1';
+                } else if (state === 'recording') {
+                    miniCircle.style.borderColor = '#4ade80';
+                    miniCircle.style.boxShadow = '0 0 16px rgba(74,222,128,0.3)';
+                    startMiniWave();
+                } else if (state === 'transcribing') {
+                    miniCircle.style.borderColor = '#fbbf24';
+                    miniCircle.style.boxShadow = '0 0 12px rgba(251,191,36,0.3)';
+                    miniSpinner.style.opacity = '1';
+                } else if (state === 'done') {
+                    miniCircle.style.borderColor = '#4ade80';
+                    miniCircle.style.boxShadow = '0 0 20px rgba(74,222,128,0.5)';
+                    miniCheck.style.opacity = '1';
+                    miniCheck.style.transform = 'scale(1)';
+                }
+            }
+
+            function startMiniWave() {
+                if (miniFrame) cancelAnimationFrame(miniFrame);
+                function draw() {
+                    if (miniState !== 'recording') return;
+                    miniWave.shift();
+                    miniWave.push(0.2 + Math.random() * 0.8);
+                    mCtx.clearRect(0, 0, MW, MH);
+                    mCtx.beginPath();
+                    for (let i = 0; i <= MSA; i++) {
+                        const angle = (i / MSA) * Math.PI * 2 - Math.PI / 2;
+                        const r = MBR + miniWave[i % MSA] * MMA;
+                        const x = MCX + Math.cos(angle) * r;
+                        const y = MCY + Math.sin(angle) * r;
+                        if (i === 0) mCtx.moveTo(x, y); else mCtx.lineTo(x, y);
+                    }
+                    mCtx.closePath();
+                    mCtx.strokeStyle = 'rgba(74,222,128,0.8)';
+                    mCtx.lineWidth = 2;
+                    mCtx.stroke();
+                    miniFrame = requestAnimationFrame(draw);
+                }
+                draw();
+            }
+
+            function runSpeedComparison() {
+                if (speedRunning) return;
+                speedRunning = true;
+                let kbIdx = 0, vbIdx = 0;
+                if (kbEl) kbEl.textContent = '';
+                if (vbEl) vbEl.textContent = '';
+
+                // Start: widget recording
+                setMiniState('recording');
+
+                function typeKb() {
+                    if (kbIdx < speedText.length) {
+                        kbEl.textContent = speedText.substring(0, kbIdx + 1);
+                        kbIdx++;
+                        setTimeout(typeKb, 180 + Math.random() * 160);
+                    }
+                }
+
+                function typeVb() {
+                    if (vbIdx < speedText.length) {
+                        vbEl.textContent = speedText.substring(0, vbIdx + 1);
+                        vbIdx++;
+                        setTimeout(typeVb, 20 + Math.random() * 30);
+                    } else {
+                        // VB done → transcribing → done → idle
+                        setMiniState('transcribing');
+                        setTimeout(() => {
+                            setMiniState('done');
+                            setTimeout(() => {
+                                setMiniState('idle');
+                                speedRunning = false;
+                                setTimeout(runSpeedComparison, 3000);
+                            }, 1500);
+                        }, 800);
+                    }
+                }
+
+                typeKb(); typeVb();
+            }
+
+            const speedObserver = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) { setTimeout(runSpeedComparison, 500); speedObserver.disconnect(); }
+            }, { threshold: 0.3 });
+
+            const speedSection = document.querySelector('.speed-section');
+            if (speedSection) speedObserver.observe(speedSection);
         })();
     </script>
 </body>
