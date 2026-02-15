@@ -1410,6 +1410,17 @@
             box-shadow: 0 4px 20px rgba(74, 222, 128, 0.3);
         }
 
+        .pricing-toggle {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .pricing-btn-annual {
+            font-size: 0.78rem;
+            padding: 10px 16px;
+        }
+
         .pricing-btn-ghost {
             background: var(--bg-glass);
             color: var(--text-secondary);
@@ -2402,7 +2413,7 @@
                 <div class="roadmap-card reveal reveal-d6">
                     <span class="roadmap-badge planned">Planned</span>
                     <h3>Teams &amp; Enterprise</h3>
-                    <p>Shared dictionaries, team snippets, admin controls, SSO, HIPAA/SOC2 compliance. Built for organizations that move fast.</p>
+                    <p>Shared dictionaries, team snippets, admin controls, SSO, GDPR, HIPAA &amp; SOC 2 compliance. Built for organizations that move fast.</p>
                 </div>
             </div>
         </div>
@@ -2449,7 +2460,10 @@
                         <li>Early access to all new features</li>
                         <li>Priority email support</li>
                     </ul>
-                    <a href="#download" class="pricing-btn pricing-btn-primary">Get Pro</a>
+                    <div class="pricing-toggle">
+                        <a href="https://buy.stripe.com/MONTHLY_PAYMENT_LINK" class="pricing-btn pricing-btn-primary" target="_blank" rel="noopener">Get Pro — $10/mo</a>
+                        <a href="https://buy.stripe.com/YEARLY_PAYMENT_LINK" class="pricing-btn pricing-btn-outline pricing-btn-annual" target="_blank" rel="noopener">Get Pro Yearly — $96/yr (Save 20%)</a>
+                    </div>
                 </div>
                 <div class="pricing-card reveal">
                     <div class="pricing-name">Enterprise</div>
@@ -2461,7 +2475,7 @@
                         <li>SSO (Okta, Azure AD, Google)</li>
                         <li>Team shared dictionaries</li>
                         <li>Admin dashboard &amp; controls</li>
-                        <li>SOC 2 / HIPAA ready</li>
+                        <li>GDPR, SOC 2 &amp; HIPAA ready</li>
                         <li>Dedicated account manager</li>
                         <li>Custom onboarding</li>
                     </ul>
